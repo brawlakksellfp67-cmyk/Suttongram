@@ -1,186 +1,70 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Suttongram</title>
-  <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: sans-serif; }
-    body { background: #0e1621; color: #fff; height: 100vh; display: flex; flex-direction: column; }
-    .hidden { display: none !important; }
-    #auth-screen { max-width: 400px; margin: auto; padding: 24px; background: #17212b; border-radius: 16px; width: 90%; text-align: center; }
-    h1 { color: #5288c1; margin-bottom: 8px; }
-    p { color: #7f91a4; margin-bottom: 16px; font-size: 14px; }
-    input, select { width: 100%; padding: 12px; margin-bottom: 12px; border-radius: 10px; border: 1px solid #2b5278; background: #242f3d; color: #fff; font-size: 15px; }
-    button { width: 100%; padding: 12px; border-radius: 10px; border: none; background: #5288c1; color: #fff; font-size: 15px; font-weight: bold; cursor: pointer; margin-bottom: 8px; }
-    button.secondary { background: #242f3d; color: #5288c1; }
-    header { background: #17212b; padding: 14px 16px; display: flex; justify-content: space-between; align-items: center; }
-    .stars-badge { background: #242f3d; padding: 6px 12px; border-radius: 20px; color: #ffd700; font-weight: bold; }
-    nav { background: #17212b; display: flex; border-top: 1px solid #0e1621; }
-    nav button { flex: 1; background: none; border-radius: 0; margin: 0; padding: 12px 4px; font-size: 13px; color: #7f91a4; }
-    nav button.active { color: #5288c1; border-top: 2px solid #5288c1; }
-    main { flex: 1; overflow-y: auto; padding: 12px; }
-    .card { background: #17212b; padding: 14px; border-radius: 12px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
-    .owner-tag { background: #5288c1; color: #fff; font-size: 11px; padding: 2px 6px; border-radius: 6px; margin-left: 6px; }
-    .btn-small { width: auto; padding: 8px 14px; font-size: 13px; margin: 0; }
-    #chat-view { display: flex; flex-direction: column; height: 100%; }
-    #messages-box { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; padding-bottom: 10px; }
-    .msg { max-width: 78%; padding: 10px 14px; border-radius: 14px; font-size: 15px; }
-    .msg.mine { background: #2b5278; align-self: flex-end; }
-    .msg.theirs { background: #182533; align-self: flex-start; }
-    .chat-input-bar { display: flex; gap: 8px; }
-    .chat-input-bar input { margin: 0; flex: 1; }
-    .chat-input-bar button { width: auto; margin: 0; padding: 0 18px; }
-    .gift-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-    .gift-card { background: #17212b; padding: 16px; border-radius: 14px; text-align: center; }
-  </style>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Suttongram</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;font-family:sans-serif}
+body{background:#0e1621;color:#fff;height:100vh;display:flex;flex-direction:column}
+.hidden{display:none!important}
+#auth-screen{max-width:400px;margin:auto;padding:24px;background:#17212b;border-radius:16px;width:90%;text-align:center}
+h1{color:#5288c1;margin-bottom:8px}p{color:#7f91a4;margin-bottom:16px;font-size:14px}
+input,select{width:100%;padding:12px;margin-bottom:12px;border-radius:10px;border:1px solid #2b5278;background:#242f3d;color:#fff;font-size:15px}
+button{width:100%;padding:12px;border-radius:10px;border:none;background:#5288c1;color:#fff;font-size:15px;font-weight:bold;cursor:pointer;margin-bottom:8px}
+button.secondary{background:#242f3d;color:#5288c1}
+header{background:#17212b;padding:14px 16px;display:flex;justify-content:space-between;align-items:center}
+.stars-badge{background:#242f3d;padding:6px 12px;border-radius:20px;color:#ffd700;font-weight:bold}
+nav{background:#17212b;display:flex;border-top:1px solid #0e1621}
+nav button{flex:1;background:none;border-radius:0;margin:0;padding:12px 4px;font-size:13px;color:#7f91a4}
+nav button.active{color:#5288c1;border-top:2px solid #5288c1}
+main{flex:1;overflow-y:auto;padding:12px}
+.card{background:#17212b;padding:14px;border-radius:12px;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center}
+.owner-tag{background:#5288c1;color:#fff;font-size:11px;padding:2px 6px;border-radius:6px;margin-left:6px}
+.btn-small{width:auto;padding:8px 14px;font-size:13px;margin:0}
+#chat-view{display:flex;flex-direction:column;height:100%}
+#messages-box{flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:8px;padding-bottom:10px}
+.msg{max-width:78%;padding:10px 14px;border-radius:14px;font-size:15px}
+.msg.mine{background:#2b5278;align-self:flex-end}.msg.theirs{background:#182533;align-self:flex-start}
+.chat-input-bar{display:flex;gap:8px}.chat-input-bar input{margin:0;flex:1}.chat-input-bar button{width:auto;margin:0;padding:0 18px}
+.gift-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.gift-card{background:#17212b;padding:16px;border-radius:14px;text-align:center}
+</style>
 </head>
 <body>
-  <div id="auth-screen">
-    <h1>Suttongram</h1>
-    <p>Твой мессенджер со звёздами и подарками</p>
-    <input type="text" id="username-input" placeholder="Никнейм (напр. sutton)" />
-    <input type="password" id="password-input" placeholder="Пароль (от 6 символов)" />
-    <button onclick="handleAuth(false)">Войти</button>
-    <button class="secondary" onclick="handleAuth(true)">Создать аккаунт</button>
-    <p id="auth-error" style="color: #ff6b6b; margin-top: 10px; word-break: break-word;"></p>
-  </div>
-
-  <div id="app-screen" class="hidden" style="display: flex; flex-direction: column; height: 100vh;">
-    <header>
-      <b id="header-title">Suttongram</b>
-      <div class="stars-badge">⭐ <span id="my-stars">0</span></div>
-    </header>
-    <main>
-      <div id="tab-chats">
-        <div id="users-list"></div>
-        <div id="chat-view" class="hidden">
-          <button class="secondary btn-small" onclick="closeChat()" style="margin-bottom: 10px;">← Назад</button>
-          <div id="messages-box"></div>
-          <div class="chat-input-bar">
-            <input type="text" id="msg-input" placeholder="Сообщение..." />
-            <button onclick="sendMessage()">➤</button>
-          </div>
-        </div>
-      </div>
-      <div id="tab-shop" class="hidden">
-        <p>Кому подарить:</p>
-        <select id="gift-recipient"></select>
-        <div class="gift-grid" id="shop-list"></div>
-      </div>
-      <div id="tab-profile" class="hidden">
-        <div class="card" style="flex-direction: column; align-items: flex-start;">
-          <b id="profile-name">Загрузка...</b>
-          <span id="profile-role" style="color:#7f91a4; font-size:13px;">Пользователь</span>
-        </div>
-        <h3 style="margin: 12px 0;">🎁 Мои подарки:</h3>
-        <div class="gift-grid" id="my-gifts-list"></div>
-        <button class="secondary" onclick="location.reload()" style="margin-top: 20px;">Выйти</button>
-      </div>
-      <div id="tab-owner" class="hidden">
-        <div class="card" style="flex-direction: column; align-items: stretch;">
-          <h3 style="margin-bottom: 10px;">👑 Выдать звёзды</h3>
-          <select id="admin-user-select"></select>
-          <input type="number" id="admin-stars-amount" placeholder="Сколько звёзд" />
-          <button onclick="giveStars()">Начислить</button>
-        </div>
-        <div class="card" style="flex-direction: column; align-items: stretch;">
-          <h3 style="margin-bottom: 10px;">➕ Новый подарок</h3>
-          <input type="text" id="new-gift-emoji" placeholder="Эмодзи (напр. 🧸)" />
-          <input type="text" id="new-gift-name" placeholder="Название" />
-          <input type="number" id="new-gift-price" placeholder="Цена" />
-          <button onclick="createGift()">Добавить</button>
-        </div>
-      </div>
-    </main>
-    <nav>
-      <button class="active" onclick="switchTab('chats', this)">💬 Чаты</button>
-      <button onclick="switchTab('shop', this)">🛍️ Магазин</button>
-      <button onclick="switchTab('profile', this)">👤 Профиль</button>
-      <button id="nav-owner" class="hidden" onclick="switchTab('owner', this)">👑 Админка</button>
-    </nav>
-  </div>
-
-  <script>
-    const HOST = "idashrgfukgszyrqpjid" + "." + "supabase" + "." + "co";
-    const BASE = "https://" + HOST;
-    const KEY = "sb_publishable_wEuPnq7xgewXLeWYmoG5iw_0ZzT25i_";
-    const HEADERS = { "apikey": KEY, "Content-Type": "application/json", "Prefer": "return=representation" };
-
-    let me = null, activeChat = null, allUsers = [], chatTimer = null;
-
-    async function api(path, method = "GET", body = null) {
-      const opts = { method, headers: HEADERS };
-      if (body) opts.body = JSON.stringify(body);
-      const r = await fetch(BASE + path, opts);
-      const txt = await r.text();
-      let data = {};
-      try { data = JSON.parse(txt); } catch (e) {}
-      if (!r.ok) throw new Error(data.msg || data.message || data.error_description || ("Код " + r.status + ": " + txt));
-      return data;
-    }
-
-    async function handleAuth(isSignUp) {
-      const err = document.getElementById('auth-error');
-      err.innerText = "Подключаюсь к базе...";
-      try {
-        const username = document.getElementById('username-input').value.trim().toLowerCase().replace(/[^a-z0-9_]/g, '');
-        const password = document.getElementById('password-input').value;
-        if (!username || password.length < 6) { err.innerText = "Введи ник (англ.) и пароль от 6 символов"; return; }
-        const email = username + "@gmail.com";
-
-        if (isSignUp) {
-          const authData = await api("/auth/v1/signup", "POST", { email, password });
-          const uid = (authData.user && authData.user.id) || authData.id;
-          if (!uid) throw new Error("Не получен ID: " + JSON.stringify(authData));
-          const existing = await api("/rest/v1/profiles?select=id");
-          const isFirst = existing.length === 0;
-          const prof = await api("/rest/v1/profiles", "POST", { id: uid, username, stars: isFirst ? 9999 : 50, is_owner: isFirst });
-          me = prof[0];
-        } else {
-          const authData = await api("/auth/v1/token?grant_type=password", "POST", { email, password });
-          const prof = await api("/rest/v1/profiles?id=eq." + authData.user.id);
-          me = prof[0];
-        }
-        startApp();
-      } catch (e) {
-        err.innerText = "Ошибка: " + e.message;
-      }
-    }
-
-    async function startApp() {
-      document.getElementById('auth-screen').classList.add('hidden');
-      document.getElementById('app-screen').classList.remove('hidden');
-      renderMe();
-      await loadUsers();
-      await loadShop();
-    }
-
-    function renderMe() {
-      document.getElementById('my-stars').innerText = me.stars;
-      document.getElementById('profile-name').innerHTML = `@${me.username}${me.is_owner ? '<span class="owner-tag">Владелец</span>' : ''}`;
-      if (me.is_owner) {
-        document.getElementById('profile-role').innerText = "Создатель Suttongram 👑";
-        document.getElementById('nav-owner').classList.remove('hidden');
-      }
-    }
-
-    async function loadUsers() {
-      allUsers = await api("/rest/v1/profiles?select=*");
-      me = allUsers.find(u => u.id === me.id) || me;
-      renderMe();
-      const list = document.getElementById('users-list'), gs = document.getElementById('gift-recipient'), as = document.getElementById('admin-user-select');
-      list.innerHTML = ""; gs.innerHTML = ""; as.innerHTML = "";
-      allUsers.forEach(u => {
-        as.innerHTML += `<option value="${u.id}">@${u.username} (⭐ ${u.stars})</option>`;
-        if (u.id !== me.id) {
-          gs.innerHTML += `<option value="${u.id}">@${u.username}</option>`;
-          list.innerHTML += `<div class="card"><div><b>@${u.username}</b>${u.is_owner ? '<span class="owner-tag">Владелец</span>' : ''}</div><button class="btn-small" onclick="openChat('${u.id}','${u.username}')">Чат</button></div>`;
-        }
-      });
-      if (!list.innerHTML) list.innerHTML = "<p>Пока никого нет. Отправь ссылку другу!</p>";
-    }
-
-    async function openChat(uid, uname) {
-      activeChat = { id: uid, username: uname };
-      document.getElementById('users-list').classList.add('hidden');
+<div id="auth-screen">
+<h1>Suttongram</h1><p>Твой мессенджер со звёздами и подарками</p>
+<input id="u-in" placeholder="Никнейм (напр. sutton)"><input type="password" id="p-in" placeholder="Пароль (от 6 символов)">
+<button onclick="auth(0)">Войти</button><button class="secondary" onclick="auth(1)">Создать аккаунт</button>
+<p id="err" style="color:#ff6b6b;margin-top:10px;word-break:break-word"></p>
+</div>
+<div id="app-screen" class="hidden" style="display:flex;flex-direction:column;height:100vh">
+<header><b id="hdr">Suttongram</b><div class="stars-badge">⭐ <span id="stars">0</span></div></header>
+<main>
+<div id="tab-chats"><div id="ulist"></div><div id="chat-view" class="hidden"><button class="secondary btn-small" onclick="closeChat()" style="margin-bottom:10px">← Назад</button><div id="mbox"></div><div class="chat-input-bar"><input id="minp" placeholder="Сообщение..."><button onclick="send()">➤</button></div></div></div>
+<div id="tab-shop" class="hidden"><p>Кому подарить:</p><select id="grec"></select><div class="gift-grid" id="slist"></div></div>
+<div id="tab-profile" class="hidden"><div class="card" style="flex-direction:column;align-items:flex-start"><b id="pname"></b><span id="prole" style="color:#7f91a4;font-size:13px">Пользователь</span></div><h3 style="margin:12px 0">🎁 Мои подарки:</h3><div class="gift-grid" id="mgifts"></div><button class="secondary" onclick="location.reload()" style="margin-top:20px">Выйти</button></div>
+<div id="tab-owner" class="hidden"><div class="card" style="flex-direction:column;align-items:stretch"><h3 style="margin-bottom:10px">👑 Выдать звёзды</h3><select id="ausel"></select><input type="number" id="aamt" placeholder="Сколько звёзд"><button onclick="giveStars()">Начислить</button></div><div class="card" style="flex-direction:column;align-items:stretch"><h3 style="margin-bottom:10px">➕ Новый подарок</h3><input id="ng-e" placeholder="Эмодзи (🧸)"><input id="ng-n" placeholder="Название"><input type="number" id="ng-p" placeholder="Цена"><button onclick="newGift()">Добавить</button></div></div>
+</main>
+<nav><button class="active" onclick="tab('chats',this)">💬 Чаты</button><button onclick="tab('shop',this)">🛍️ Магазин</button><button onclick="tab('profile',this)">👤 Профиль</button><button id="n-own" class="hidden" onclick="tab('owner',this)">👑 Админка</button></nav>
+</div>
+<script>
+const BASE="https://idashrgfukgszyrqpjid."+"supabase.co",KEY="sb_publishable_wEuPnq7xgewXLeWYmoG5iw_0ZzT25i_";
+const H={"apikey":KEY,"Content-Type":"application/json","Prefer":"return=representation"};
+let me=null,chat=null,users=[],tmr=null;
+const $=id=>document.getElementById(id);
+async function api(p,m="GET",b=null){const r=await fetch(BASE+p,{method:m,headers:H,body:b?JSON.stringify(b):null});const t=await r.text();let d={};try{d=JSON.parse(t)}catch(e){}if(!r.ok)throw new Error(d.msg||d.message||t);return d}
+async function auth(reg){$('err').innerText="Загрузка...";try{const u=$('u-in').value.trim().toLowerCase().replace(/[^a-z0-9_]/g,''),p=$('p-in').value;if(!u||p.length<6)throw new Error("Введи ник (англ.) и пароль от 6 символов");const em=u+"@gmail.com";if(reg){const a=await api("/auth/v1/signup","POST",{email:em,password:p});const uid=(a.user&&a.user.id)||a.id;const ex=await api("/rest/v1/profiles?select=id");const f=ex.length===0;const pr=await api("/rest/v1/profiles","POST",{id:uid,username:u,stars:f?9999:50,is_owner:f});me=pr[0]}else{const a=await api("/auth/v1/token?grant_type=password","POST",{email:em,password:p});const pr=await api("/rest/v1/profiles?id=eq."+a.user.id);me=pr[0]}$('auth-screen').classList.add('hidden');$('app-screen').classList.remove('hidden');loadUsers();loadShop()}catch(e){$('err').innerText=e.message}}
+function renderMe(){$('stars').innerText=me.stars;$('pname').innerHTML=`@${me.username}${me.is_owner?'<span class="owner-tag">Владелец</span>':''}`;if(me.is_owner){$('prole').innerText="Создатель Suttongram 👑";$('n-own').classList.remove('hidden')}}
+async function loadUsers(){users=await api("/rest/v1/profiles?select=*");me=users.find(x=>x.id===me.id)||me;renderMe();$('ulist').innerHTML="";$('grec').innerHTML="";$('ausel').innerHTML="";users.forEach(u=>{$('ausel').innerHTML+=`<option value="${u.id}">@${u.username} (⭐ ${u.stars})</option>`;if(u.id!==me.id){$('grec').innerHTML+=`<option value="${u.id}">@${u.username}</option>`;$('ulist').innerHTML+=`<div class="card"><div><b>@${u.username}</b>${u.is_owner?'<span class="owner-tag">Владелец</span>':''}</div><button class="btn-small" onclick="openChat('${u.id}','${u.username}')">Чат</button></div>`}});if(!$('ulist').innerHTML)$('ulist').innerHTML="<p>Пока никого нет. Позови друзей!</p>"}
+async function openChat(id,name){chat={id,name};$('ulist').classList.add('hidden');$('chat-view').classList.remove('hidden');$('hdr').innerText="@"+name;await loadMsgs();tmr=setInterval(loadMsgs,2500)}
+async function loadMsgs(){if(!chat)return;const ms=await api(`/rest/v1/messages?or=(and(sender_id.eq.${me.id},receiver_id.eq.${chat.id}),and(sender_id.eq.${chat.id},receiver_id.eq.${me.id}))&order=created_at.asc`);$('mbox').innerHTML="";ms.forEach(m=>{const d=document.createElement('div');d.className="msg "+(m.sender_id===me.id?"mine":"theirs");d.innerText=m.content;$('mbox').appendChild(d)});$('mbox').scrollTop=$('mbox').scrollHeight}
+function closeChat(){chat=null;clearInterval(tmr);$('chat-view').classList.add('hidden');$('ulist').classList.remove('hidden');$('hdr').innerText="Suttongram"}
+async function send(){const t=$('minp').value.trim();if(!t||!chat)return;$('minp').value="";await api("/rest/v1/messages","POST",{sender_id:me.id,receiver_id:chat.id,content:t});loadMsgs()}
+async function loadShop(){const gs=await api("/rest/v1/gifts?select=*&order=price.asc");$('slist').innerHTML="";gs.forEach(g=>{$('slist').innerHTML+=`<div class="gift-card"><div style="font-size:40px">${g.emoji}</div><b>${g.name}</b><div style="color:#ffd700;margin:6px 0">⭐ ${g.price}</div><button class="btn-small" onclick="buy(${g.id},${g.price})">Подарить</button></div>`})}
+async function buy(id,p){const r=$('grec').value;if(!r)return alert("Некому дарить!");if(me.stars<p)return alert("Мало звёзд!");await api("/rest/v1/profiles?id=eq."+me.id,"PATCH",{stars:me.stars-p});await api("/rest/v1/user_gifts","POST",{gift_id:id,sender_id:me.id,receiver_id:r});alert("Подарок отправлен! 🎁");loadUsers()}
+async function loadMyGifts(){const is=await api(`/rest/v1/user_gifts?select=*,gifts(*),sender:profiles!sender_id(username)&receiver_id=eq.${me.id}`);$('mgifts').innerHTML="";is.forEach(i=>{$('mgifts').innerHTML+=`<div class="gift-card"><div style="font-size:40px">${i.gifts.emoji}</div><b>${i.gifts.name}</b><div style="color:#7f91a4;font-size:12px">от @${i.sender.username}</div></div>`});if(!$('mgifts').innerHTML)$('mgifts').innerHTML="<p>Подарков пока нет</p>"}
+async function giveStars(){const id=$('ausel').value,a=parseInt($('aamt').value);if(!a)return;const u=users.find(x=>x.id===id);await api("/rest/v1/profiles?id=eq."+id,"PATCH",{stars:u.stars+a});alert("Звёзды выданы!");loadUsers()}
+async function newGift(){const e=$('ng-e').value.trim(),n=$('ng-n').value.trim(),p=parseInt($('ng-p').value);if(!e||!n||!p)return alert("Заполни поля");await api("/rest/v1/gifts","POST",{emoji:e,name:n,price:p});alert("Добавлено!");loadShop()}
+function tab(t,b){['chats','shop','profile','owner'].forEach(x=>$('tab-'+x).classList.add('hidden'));$('tab-'+t).classList.remove('hidden');document.querySelectorAll('nav button').forEach(x=>x.classList.remove('active'));b.classList.add('active');if(t==='profile')loadMyGifts();if(t==='chats')loadUsers()}
+</script>
+</body>
+</html>
