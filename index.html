@@ -32,7 +32,14 @@
     <div class="tabs-bar"><span id="f-all" class="act" onclick="setFilter('all')">Все чаты</span><span id="f-own" onclick="setFilter('own')">👑 Владельцы</span></div>
   </div>
   <main id="main-box">
-    <div id="t-chats" style="height:100%;display:flex;flex-direction:column">
+        <div id="t-chats" style="height:100%;display:flex;flex-direction:column">
+      <div style="padding:10px 14px 0"><button class="sec" style="margin:0;padding:9px;font-size:13px" onclick="openGrpModal()">➕ Создать группу</button></div>
+      <div id="grp-modal" class="hidden pad" style="background:#17212b;margin:10px;border-radius:16px">
+        <h4 style="margin-bottom:8px">Новая группа</h4>
+        <input id="grp-name" placeholder="Название группы">
+        <div id="grp-friends" style="max-height:140px;overflow-y:auto;margin-bottom:10px"></div>
+        <div style="display:flex;gap:8px"><button class="btn-sm" onclick="createGrp()">Создать</button><button class="btn-sm sec" onclick="$('grp-modal').classList.add('hidden')">Отмена</button></div>
+      </div>
       <div id="ulist"></div>
       <div id="cview" class="hidden">
         <div id="mbox"></div>
