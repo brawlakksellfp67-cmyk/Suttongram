@@ -21,21 +21,22 @@ header{background:#17212b;padding:10px 14px;display:flex;justify-content:space-b
 .tabs-bar{background:#17212b;display:flex;gap:18px;padding:0 16px 10px;border-bottom:1px solid #0b121b;font-size:14px;font-weight:600;color:#7f91a4;flex-shrink:0}
 .tabs-bar span.act{color:#2aabee;position:relative}
 .tabs-bar span.act::after{content:"";position:absolute;left:0;right:0;bottom:-10px;height:3px;background:#2aabee;border-radius:3px}
-main{flex:1;overflow-y:auto;display:flex;flex-direction:column;padding-bottom:76px}
+main{flex:1;overflow-y:auto;display:flex;flex-direction:column;padding-bottom:78px}
 .row{display:flex;align-items:center;gap:12px;padding:10px 14px;border-bottom:1px solid #131c27;cursor:pointer}
 .row:active{background:#17212b}
 .ava{width:50px;height:50px;border-radius:50%;background:linear-gradient(135deg,#3b9ee3,#1e73b8);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:18px;flex-shrink:0;text-transform:uppercase;background-size:cover;background-position:center;overflow:hidden;color:#fff}
 .ava.lg{width:76px;height:76px;font-size:26px;border:2px solid #2aabee}
-.ava.xs{width:22px;height:22px;font-size:10px;margin-bottom:2px}
+.ava.xs{width:20px;height:20px;font-size:9px;margin-bottom:2px}
 .r-mid{flex:1;min-width:0}
 .r-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:3px}
 .r-name{font-weight:600;font-size:16px;display:flex;align-items:center;gap:5px}
 .r-time{font-size:12px;color:#7f91a4}
 .r-msg{font-size:14px;color:#7f91a4;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .ok{background:#2aabee;color:#fff;font-size:10px;width:16px;height:16px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center}
-#bnav{position:fixed;bottom:10px;left:12px;right:12px;background:rgba(23,33,43,0.94);backdrop-filter:blur(10px);border:1px solid #233040;border-radius:28px;display:grid;grid-auto-flow:column;grid-auto-columns:1fr;height:58px;padding:4px;z-index:20;box-shadow:0 6px 20px rgba(0,0,0,.45)}
-#bnav button{background:none;border-radius:22px;margin:0;padding:4px 2px;font-size:11px;color:#8e9fad;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px}
+#bnav{position:fixed;bottom:10px;left:10px;right:10px;background:rgba(23,33,43,0.95);backdrop-filter:blur(10px);border:1px solid #233040;border-radius:28px;display:grid;grid-auto-flow:column;grid-auto-columns:1fr;height:58px;padding:4px;z-index:20;box-shadow:0 6px 20px rgba(0,0,0,.45)}
+#bnav button{background:none;border-radius:22px;margin:0;padding:4px 1px;font-size:10px;color:#8e9fad;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;position:relative}
 #bnav button.act{background:#233346;color:#2aabee}
+.badge{position:absolute;top:4px;right:14px;background:#2aabee;color:#fff;font-size:10px;font-weight:700;padding:1px 5px;border-radius:10px}
 #cview{display:flex;flex-direction:column;height:100%}
 #mbox{flex:1;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:6px}
 .msg{max-width:78%;padding:9px 13px;border-radius:16px;font-size:15px;word-wrap:break-word}
@@ -48,6 +49,7 @@ main{flex:1;overflow-y:auto;display:flex;flex-direction:column;padding-bottom:76
 .card{background:#17212b;padding:14px;border-radius:16px;margin-bottom:10px}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .gcard{background:#17212b;padding:14px;border-radius:16px;text-align:center}
+.btn-sm{width:auto;padding:7px 12px;font-size:13px;margin:0;border-radius:10px}
 </style>
 </head>
 <body>
@@ -72,7 +74,7 @@ main{flex:1;overflow-y:auto;display:flex;flex-direction:column;padding-bottom:76
 </div>
 </header>
 <div id="top-bar">
-<div class="search-wrap"><div class="search-box">🔍 <input id="srch" placeholder="Поиск чатов" oninput="renderList()"></div></div>
+<div class="search-wrap"><div class="search-box">🔍 <input id="srch" placeholder="Поиск по друзьям" oninput="renderList()"></div></div>
 <div class="tabs-bar"><span id="f-all" class="act" onclick="setFilter('all')">Все чаты</span><span id="f-own" onclick="setFilter('own')">👑 Владельцы</span></div>
 </div>
 <main id="main-box">
@@ -83,7 +85,23 @@ main{flex:1;overflow-y:auto;display:flex;flex-direction:column;padding-bottom:76
 <div class="cbar"><input id="minp" placeholder="Сообщение..." onkeydown="if(event.key==='Enter')send()"><button onclick="send()">➤</button></div>
 </div>
 </div>
-<div id="t-shop" class="hidden pad"><select id="grec"></select><div class="grid" id="slist"></div></div>
+<div id="t-fr" class="hidden pad">
+<div class="card">
+<h4 style="margin-bottom:8px;font-size:15px">➕ Найти друга по нику</h4>
+<div style="display:flex;gap:8px"><input id="f-srch" placeholder="Введи ник (напр. grafin4ik)" style="margin:0"><button class="btn-sm" onclick="findFr()">Найти</button></div>
+<div id="f-res" style="margin-top:10px"></div>
+</div>
+<div id="req-box"></div>
+<div style="color:#7f91a4;font-size:12px;font-weight:700;margin:12px 0 8px">👥 МОИ ДРУЗЬЯ</div>
+<div id="flist"></div>
+</div>
+<div id="t-shop" class="hidden pad">
+<div class="card">
+<div style="color:#7f91a4;font-size:12px;margin-bottom:6px">🎁 КОМУ ОТПРАВИТЬ ПОДАРОК:</div>
+<select id="grec" style="margin:0"></select>
+</div>
+<div class="grid" id="slist"></div>
+</div>
 <div id="t-prof" class="hidden pad">
 <div class="card" style="display:flex;align-items:center;gap:14px">
 <div id="pava" class="ava lg" onclick="$('ain').click()"></div>
@@ -104,6 +122,7 @@ main{flex:1;overflow-y:auto;display:flex;flex-direction:column;padding-bottom:76
 </main>
 <nav id="bnav">
 <button class="act" onclick="tab('chats',this)"><span style="font-size:18px">💬</span>Чаты</button>
+<button onclick="tab('fr',this)"><span style="font-size:18px">👥</span>Друзья<span id="fbadge" class="badge hidden">0</span></button>
 <button onclick="tab('shop',this)"><span style="font-size:18px">🛍️</span>Подарки</button>
 <button onclick="tab('prof',this)"><div id="nava" class="ava xs"></div>Профиль</button>
 <button id="nown" class="hidden" onclick="tab('own',this)"><span style="font-size:18px">👑</span>Админка</button>
@@ -114,7 +133,7 @@ const B = "https://idashrgfukgszyrqpjid." + "supabase.co";
 const K = "sb_publishable_wEuPnq7xgewXLeWYmoG5iw_0ZzT25i_";
 const H = { "apikey": K, "Content-Type": "application/json", "Prefer": "return=representation" };
 const $ = i => document.getElementById(i);
-let me = null, ch = null, us = [], allMsgs = [], flt = "all", tm = null;
+let me = null, ch = null, us = [], frs = [], allMsgs = [], flt = "all", tm = null;
 
 async function api(p, m = "GET", b = null) {
   const r = await fetch(B + p, { method: m, headers: H, body: b ? JSON.stringify(b) : null });
@@ -134,7 +153,7 @@ function enter() {
   localStorage.setItem("sg_id", me.id);
   $('auth').classList.add('hidden');
   $('app').classList.remove('hidden');
-  loadU(); loadS();
+  loadAll(); loadS();
 }
 
 function logout() { localStorage.removeItem("sg_id"); location.reload(); }
@@ -170,27 +189,45 @@ function setFilter(f) {
   renderList();
 }
 
-async function loadU() {
+function getFriendIds() {
+  const ids = [];
+  frs.forEach(f => {
+    if (f.status === 'accepted') {
+      if (f.user_id === me.id) ids.push(f.friend_id);
+      if (f.friend_id === me.id) ids.push(f.user_id);
+    }
+  });
+  return ids;
+}
+
+async function loadAll() {
   us = await api("/rest/v1/profiles?select=*");
+  frs = await api(`/rest/v1/friends?or=(user_id.eq.${me.id},friend_id.eq.${me.id})`);
   allMsgs = await api(`/rest/v1/messages?or=(sender_id.eq.${me.id},receiver_id.eq.${me.id})&order=created_at.desc`);
   me = us.find(x => x.id === me.id) || me;
   $('st').innerText = me.stars;
   setAva($('pava'), me); setAva($('nava'), me);
   $('pname').innerHTML = "@" + me.username + (me.is_owner ? '<span class="ok">✓</span>' : '');
   if (me.is_owner) { $('prole').innerText = "Создатель Suttongram 👑"; $('nown').classList.remove('hidden'); }
+
+  const fIds = getFriendIds();
   $('grec').innerHTML = ""; $('ausel').innerHTML = "";
   us.forEach(u => {
     $('ausel').innerHTML += `<option value="${u.id}">@${u.username} (⭐${u.stars})</option>`;
-    if (u.id !== me.id) $('grec').innerHTML += `<option value="${u.id}">@${u.username}</option>`;
+    if (fIds.includes(u.id)) $('grec').innerHTML += `<option value="${u.id}">@${u.username}</option>`;
   });
+  if (!$('grec').innerHTML) $('grec').innerHTML = `<option value="">Сначала добавь друга в разделе 👥 Друзья</option>`;
+
   renderList();
+  renderFriends();
 }
 
 function renderList() {
   const q = ($('srch').value || "").toLowerCase();
+  const fIds = getFriendIds();
   $('ulist').innerHTML = "";
   us.forEach(u => {
-    if (u.id === me.id) return;
+    if (!fIds.includes(u.id)) return;
     if (flt === 'own' && !u.is_owner) return;
     if (q && !u.username.toLowerCase().includes(q)) return;
     const last = allMsgs.find(m => m.sender_id === u.id || m.receiver_id === u.id);
@@ -206,7 +243,60 @@ function renderList() {
     row.innerHTML += `<div class="r-mid"><div class="r-top"><div class="r-name">@${u.username}${u.is_owner ? '<span class="ok">✓</span>' : ''}</div><span class="r-time">${tmStr}</span></div><div class="r-msg">${txt}</div></div>`;
     $('ulist').appendChild(row);
   });
-  if (!$('ulist').innerHTML) $('ulist').innerHTML = "<p class='pad' style='color:#7f91a4'>Чатов не найдено</p>";
+  if (!$('ulist').innerHTML) $('ulist').innerHTML = "<p class='pad' style='color:#7f91a4'>У тебя пока нет друзей в чатах. Зайди во вкладку 👥 Друзья и добавь по нику!</p>";
+}
+
+function renderFriends() {
+  const incoming = frs.filter(f => f.friend_id === me.id && f.status === 'pending');
+  const badge = $('fbadge');
+  if (incoming.length > 0) { badge.innerText = incoming.length; badge.classList.remove('hidden'); }
+  else badge.classList.add('hidden');
+
+  $('req-box').innerHTML = incoming.length ? "<div style='color:#2aabee;font-size:12px;font-weight:700;margin:10px 0 6px'>📩 ЗАЯВКИ В ДРУЗЬЯ</div>" : "";
+  incoming.forEach(req => {
+    const u = us.find(x => x.id === req.user_id);
+    if (!u) return;
+    $('req-box').innerHTML += `<div class="card" style="display:flex;justify-content:space-between;align-items:center"><b>@${u.username}</b><div style="display:flex;gap:6px"><button class="btn-sm" style="background:#28a745" onclick="ansFr(${req.id},'accepted')">Принять</button><button class="btn-sm sec" onclick="ansFr(${req.id},'rejected')">✕</button></div></div>`;
+  });
+
+  const fIds = getFriendIds();
+  $('flist').innerHTML = "";
+  fIds.forEach(id => {
+    const u = us.find(x => x.id === id);
+    if (!u) return;
+    $('flist').innerHTML += `<div class="card" style="display:flex;justify-content:space-between;align-items:center"><b>@${u.username}${u.is_owner ? '<span class="ok">✓</span>' : ''}</b><button class="btn-sm sec" onclick="delFr('${u.id}')">Удалить</button></div>`;
+  });
+  if (!$('flist').innerHTML) $('flist').innerHTML = "<p style='color:#7f91a4;font-size:13px'>Список друзей пуст</p>";
+}
+
+function findFr() {
+  const q = $('f-srch').value.trim().toLowerCase().replace('@', '');
+  $('f-res').innerHTML = "";
+  if (!q) return;
+  const u = us.find(x => x.username.toLowerCase() === q && x.id !== me.id);
+  if (!u) { $('f-res').innerHTML = "<p style='color:#ff6b6b;font-size:13px'>Пользователь не найден</p>"; return; }
+  const rel = frs.find(f => (f.user_id === me.id && f.friend_id === u.id) || (f.friend_id === me.id && f.user_id === u.id));
+  if (rel && rel.status === 'accepted') $('f-res').innerHTML = `<p style='color:#28a745;font-size:13px'>@${u.username} уже у тебя в друзьях</p>`;
+  else if (rel && rel.status === 'pending') $('f-res').innerHTML = `<p style='color:#ffd700;font-size:13px'>Заявка уже отправлена</p>`;
+  else $('f-res').innerHTML = `<div style="display:flex;justify-content:space-between;align-items:center;padding-top:6px"><b>@${u.username}</b><button class="btn-sm" onclick="addFr('${u.id}')">Добавить в друзья</button></div>`;
+}
+
+async function addFr(fid) {
+  await api("/rest/v1/friends", "POST", { user_id: me.id, friend_id: fid, status: 'pending' });
+  alert("Заявка в друзья отправлена! 📩");
+  $('f-res').innerHTML = ""; $('f-srch').value = "";
+  loadAll();
+}
+
+async function ansFr(id, st) {
+  if (st === 'rejected') await api("/rest/v1/friends?id=eq." + id, "DELETE");
+  else await api("/rest/v1/friends?id=eq." + id, "PATCH", { status: 'accepted' });
+  loadAll();
+}
+
+async function delFr(fid) {
+  await api(`/rest/v1/friends?or=(and(user_id.eq.${me.id},friend_id.eq.${fid}),and(user_id.eq.${fid},friend_id.eq.${me.id}))`, "DELETE");
+  loadAll();
 }
 
 function upAva(inp) {
@@ -258,87 +348,4 @@ async function loadM() {
 function closeC() {
   ch = null; clearInterval(tm);
   $('cview').classList.add('hidden'); $('ulist').classList.remove('hidden'); $('bnav').classList.remove('hidden'); $('top-bar').classList.remove('hidden');
-  $('main-box').style.paddingBottom = "76px";
-  $('bbtn').classList.add('hidden'); $('cbtn').classList.add('hidden'); $('hdr').innerText = "Suttongram";
-  loadU();
-}
-
-async function send(c = null) {
-  const t = c || $('minp').value.trim();
-  if (!t || !ch) return;
-  if (!c) $('minp').value = "";
-  await api("/rest/v1/messages", "POST", { sender_id: me.id, receiver_id: ch.id, content: t });
-  loadM();
-}
-
-async function call() {
-  const rm = "SuttongramCall" + me.id.slice(0, 5) + ch.id.slice(0, 5);
-  await send("CALL::" + rm);
-  joinC(rm);
-}
-
-function joinC(rm) { window.open("https://" + "vdo" + ".ninja/?room=" + rm + "&wc=0&as=1", "_blank"); }
-
-async function loadS() {
-  const gs = await api("/rest/v1/gifts?select=*&order=price.asc");
-  $('slist').innerHTML = "";
-  gs.forEach(g => {
-    $('slist').innerHTML += `<div class="gcard"><div style="font-size:38px">${g.emoji}</div><b>${g.name}</b><div style="color:#ffd700;margin:4px 0">⭐ ${g.price}</div><button onclick="buy(${g.id},${g.price})" style="padding:7px;font-size:13px">Подарить</button></div>`;
-  });
-}
-
-async function buy(id, p) {
-  const r = $('grec').value;
-  if (!r) return alert("Некому дарить!");
-  if (me.stars < p) return alert("Мало звёзд!");
-  await api("/rest/v1/profiles?id=eq." + me.id, "PATCH", { stars: me.stars - p });
-  await api("/rest/v1/user_gifts", "POST", { gift_id: id, sender_id: me.id, receiver_id: r });
-  alert("Подарок отправлен! 🎁"); loadU();
-}
-
-async function loadG() {
-  const is = await api(`/rest/v1/user_gifts?select=*,gifts(*),sender:profiles!sender_id(username)&receiver_id=eq.${me.id}`);
-  $('mgifts').innerHTML = "";
-  is.forEach(i => {
-    $('mgifts').innerHTML += `<div class="gcard"><div style="font-size:38px">${i.gifts.emoji}</div><b>${i.gifts.name}</b><div style="color:#7f91a4;font-size:12px">от @${i.sender.username}</div></div>`;
-  });
-  if (!$('mgifts').innerHTML) $('mgifts').innerHTML = "<p style='color:#7f91a4'>Подарков пока нет</p>";
-}
-
-async function give() {
-  const id = $('ausel').value, a = parseInt($('aamt').value);
-  if (!a) return;
-  const u = us.find(x => x.id === id);
-  await api("/rest/v1/profiles?id=eq." + id, "PATCH", { stars: u.stars + a });
-  alert("Звёзды выданы!"); loadU();
-}
-
-async function addG() {
-  const e = $('nge').value.trim(), n = $('ngn').value.trim(), p = parseInt($('ngp').value);
-  if (!e || !n || !p) return alert("Заполни поля");
-  await api("/rest/v1/gifts", "POST", { emoji: e, name: n, price: p });
-  alert("Добавлено!"); loadS();
-}
-
-function tab(t, b) {
-  ['chats', 'shop', 'prof', 'own'].forEach(x => $('t-' + x).classList.add('hidden'));
-  $('t-' + t).classList.remove('hidden');
-  $('top-bar').classList.toggle('hidden', t !== 'chats');
-  document.querySelectorAll('#bnav button').forEach(x => x.classList.remove('act'));
-  b.classList.add('act');
-  if (t === 'prof') loadG();
-  if (t === 'chats') loadU();
-}
-
-(async () => {
-  const s = localStorage.getItem("sg_id");
-  if (s) {
-    try {
-      const p = await api("/rest/v1/profiles?id=eq." + s);
-      if (p.at(0)) { me = p.at(0); enter(); }
-    } catch (e) {}
-  }
-})();
-</script>
-</body>
-</html>
+  $('main-box').style.paddingBottom = "78px";
