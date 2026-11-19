@@ -6,81 +6,57 @@
   <title>Suttongram</title>
   <script src="https://jsdelivr.net"></script>
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
-    body { background: #0e1621; color: #f5f5f5; height: 100vh; display: flex; flex-direction: column; }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: sans-serif; }
+    body { background: #0e1621; color: #fff; height: 100vh; display: flex; flex-direction: column; }
     .hidden { display: none !important; }
-    
-    /* Авторизация */
     #auth-screen { max-width: 400px; margin: auto; padding: 24px; background: #17212b; border-radius: 16px; width: 90%; text-align: center; }
-    #auth-screen h1 { color: #5288c1; margin-bottom: 8px; font-size: 28px; }
-    #auth-screen p { color: #7f91a4; margin-bottom: 20px; font-size: 14px; }
-    input, select { width: 100%; padding: 12px; margin-bottom: 12px; border-radius: 10px; border: 1px solid #2b5278; background: #242f3d; color: #fff; font-size: 15px; outline: none; }
-    button { width: 100%; padding: 12px; border-radius: 10px; border: none; background: #5288c1; color: #fff; font-size: 15px; font-weight: 600; cursor: pointer; margin-bottom: 8px; }
-    button:active { opacity: 0.85; }
+    h1 { color: #5288c1; margin-bottom: 8px; }
+    p { color: #7f91a4; margin-bottom: 16px; font-size: 14px; }
+    input, select { width: 100%; padding: 12px; margin-bottom: 12px; border-radius: 10px; border: 1px solid #2b5278; background: #242f3d; color: #fff; font-size: 15px; }
+    button { width: 100%; padding: 12px; border-radius: 10px; border: none; background: #5288c1; color: #fff; font-size: 15px; font-weight: bold; cursor: pointer; margin-bottom: 8px; }
     button.secondary { background: #242f3d; color: #5288c1; }
-
-    /* Шапка */
-    header { background: #17212b; padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #0e1621; }
-    .logo { font-weight: 700; font-size: 19px; color: #fff; display: flex; align-items: center; gap: 6px; }
-    .stars-badge { background: #242f3d; padding: 6px 12px; border-radius: 20px; font-weight: 600; color: #ffd700; font-size: 14px; }
-
-    /* Навигация снизу */
+    header { background: #17212b; padding: 14px 16px; display: flex; justify-content: space-between; align-items: center; }
+    .stars-badge { background: #242f3d; padding: 6px 12px; border-radius: 20px; color: #ffd700; font-weight: bold; }
     nav { background: #17212b; display: flex; border-top: 1px solid #0e1621; }
     nav button { flex: 1; background: none; border-radius: 0; margin: 0; padding: 12px 4px; font-size: 13px; color: #7f91a4; }
     nav button.active { color: #5288c1; border-top: 2px solid #5288c1; }
-
-    /* Основной контент */
     main { flex: 1; overflow-y: auto; padding: 12px; }
     .card { background: #17212b; padding: 14px; border-radius: 12px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
-    .user-name { font-weight: 600; font-size: 16px; display: flex; align-items: center; gap: 6px; }
-    .owner-tag { background: #5288c1; color: #fff; font-size: 11px; padding: 2px 6px; border-radius: 6px; }
-    .sub-text { color: #7f91a4; font-size: 13px; margin-top: 2px; }
+    .owner-tag { background: #5288c1; color: #fff; font-size: 11px; padding: 2px 6px; border-radius: 6px; margin-left: 6px; }
     .btn-small { width: auto; padding: 8px 14px; font-size: 13px; margin: 0; }
-
-    /* Окно чата */
     #chat-view { display: flex; flex-direction: column; height: 100%; }
     #messages-box { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; padding-bottom: 10px; }
-    .msg { max-width: 78%; padding: 10px 14px; border-radius: 14px; font-size: 15px; line-height: 1.35; word-wrap: break-word; }
-    .msg.mine { background: #2b5278; align-self: flex-end; border-bottom-right-radius: 4px; }
-    .msg.theirs { background: #182533; align-self: flex-start; border-bottom-left-radius: 4px; }
-    .chat-input-bar { display: flex; gap: 8px; padding-top: 8px; }
+    .msg { max-width: 78%; padding: 10px 14px; border-radius: 14px; font-size: 15px; }
+    .msg.mine { background: #2b5278; align-self: flex-end; }
+    .msg.theirs { background: #182533; align-self: flex-start; }
+    .chat-input-bar { display: flex; gap: 8px; }
     .chat-input-bar input { margin: 0; flex: 1; }
     .chat-input-bar button { width: auto; margin: 0; padding: 0 18px; }
-
-    /* Магазин и подарки */
     .gift-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
     .gift-card { background: #17212b; padding: 16px; border-radius: 14px; text-align: center; }
-    .gift-emoji { font-size: 42px; margin-bottom: 8px; }
-    .gift-title { font-weight: 600; margin-bottom: 4px; }
-    .gift-price { color: #ffd700; font-weight: 600; margin-bottom: 10px; font-size: 14px; }
   </style>
 </head>
 <body>
-
-  <!-- ЭКРАН ВХОДА -->
   <div id="auth-screen">
     <h1>Suttongram</h1>
     <p>Твой мессенджер со звёздами и подарками</p>
-    <input type="text" id="username-input" placeholder="Придумай никнейм (напр. sutton)" />
-    <input type="password" id="password-input" placeholder="Пароль (минимум 6 символов)" />
+    <input type="text" id="username-input" placeholder="Никнейм (напр. sutton)" />
+    <input type="password" id="password-input" placeholder="Пароль (от 6 символов)" />
     <button onclick="handleAuth(false)">Войти</button>
     <button class="secondary" onclick="handleAuth(true)">Создать аккаунт</button>
-    <p id="auth-error" style="color: #ff6b6b; margin-top: 10px;"></p>
+    <p id="auth-error" style="color: #ff6b6b;"></p>
   </div>
 
-  <!-- ОСНОВНОЙ ИНТЕРФЕЙС -->
   <div id="app-screen" class="hidden" style="display: flex; flex-direction: column; height: 100vh;">
     <header>
-      <div class="logo" id="header-title">Suttongram</div>
+      <b id="header-title">Suttongram</b>
       <div class="stars-badge">⭐ <span id="my-stars">0</span></div>
     </header>
-
     <main>
-      <!-- Вкладка: Чаты / Люди -->
       <div id="tab-chats">
         <div id="users-list"></div>
         <div id="chat-view" class="hidden">
-          <button class="secondary btn-small" onclick="closeChat()" style="margin-bottom: 10px;">← Назад к списку</button>
+          <button class="secondary btn-small" onclick="closeChat()" style="margin-bottom: 10px;">← Назад</button>
           <div id="messages-box"></div>
           <div class="chat-input-bar">
             <input type="text" id="msg-input" placeholder="Сообщение..." />
@@ -88,43 +64,36 @@
           </div>
         </div>
       </div>
-
-      <!-- Вкладка: Магазин подарков -->
       <div id="tab-shop" class="hidden">
-        <p class="sub-text" style="margin-bottom: 10px;">Выбери кому подарить:</p>
+        <p>Кому подарить:</p>
         <select id="gift-recipient"></select>
         <div class="gift-grid" id="shop-list"></div>
       </div>
-
-      <!-- Вкладка: Профиль и подарки -->
       <div id="tab-profile" class="hidden">
         <div class="card" style="flex-direction: column; align-items: flex-start;">
-          <div class="user-name" id="profile-name">Загрузка...</div>
-          <div class="sub-text" id="profile-role">Пользователь Suttongram</div>
+          <b id="profile-name">Загрузка...</b>
+          <span id="profile-role" style="color:#7f91a4; font-size:13px;">Пользователь</span>
         </div>
-        <h3 style="margin: 14px 0 8px; font-size: 16px;">🎁 Мои полученные подарки:</h3>
+        <h3 style="margin: 12px 0;">🎁 Мои подарки:</h3>
         <div class="gift-grid" id="my-gifts-list"></div>
-        <button class="secondary" onclick="logout()" style="margin-top: 20px;">Выйти из аккаунта</button>
+        <button class="secondary" onclick="logout()" style="margin-top: 20px;">Выйти</button>
       </div>
-
-      <!-- Вкладка: Панель владельца -->
       <div id="tab-owner" class="hidden">
         <div class="card" style="flex-direction: column; align-items: stretch;">
           <h3 style="margin-bottom: 10px;">👑 Выдать звёзды</h3>
           <select id="admin-user-select"></select>
-          <input type="number" id="admin-stars-amount" placeholder="Количество звёзд (напр. 500)" />
-          <button onclick="giveStars()">Начислить звёзды</button>
+          <input type="number" id="admin-stars-amount" placeholder="Сколько звёзд" />
+          <button onclick="giveStars()">Начислить</button>
         </div>
         <div class="card" style="flex-direction: column; align-items: stretch;">
-          <h3 style="margin-bottom: 10px;">➕ Добавить новый подарок в магазин</h3>
-          <input type="text" id="new-gift-emoji" placeholder="Эмодзи (например: 🏎️ или 🧸)" />
-          <input type="text" id="new-gift-name" placeholder="Название подарка" />
-          <input type="number" id="new-gift-price" placeholder="Цена в звёздах" />
-          <button onclick="createGift()">Добавить в магазин</button>
+          <h3 style="margin-bottom: 10px;">➕ Новый подарок</h3>
+          <input type="text" id="new-gift-emoji" placeholder="Эмодзи (напр. 🧸)" />
+          <input type="text" id="new-gift-name" placeholder="Название" />
+          <input type="number" id="new-gift-price" placeholder="Цена" />
+          <button onclick="createGift()">Добавить</button>
         </div>
       </div>
     </main>
-
     <nav>
       <button class="active" onclick="switchTab('chats', this)">💬 Чаты</button>
       <button onclick="switchTab('shop', this)">🛍️ Магазин</button>
@@ -134,74 +103,67 @@
   </div>
 
   <script>
-    const SUPABASE_URL = "https://supabase.co";
-    const SUPABASE_KEY = "sb_publishable_wEuPnq7xgewXLeWYmoG5iw_0ZzT25i_";
-
-    const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-    let currentUser = null;
-    let currentProfile = null;
-    let activeChatUser = null;
-    let allUsers = [];
+    const sb = supabase.createClient("https://supabase.co", "sb_publishable_wEuPnq7xgewXLeWYmoG5iw_0ZzT25i_");
+    let currentUser = null, currentProfile = null, activeChatUser = null, allUsers = [];
 
     async function handleAuth(isSignUp) {
       const username = document.getElementById('username-input').value.trim().toLowerCase();
       const password = document.getElementById('password-input').value;
       const errBox = document.getElementById('auth-error');
       errBox.innerText = "";
-
-      if (!username || password.length < 6) {
-        errBox.innerText = "Введи никнейм и пароль от 6 символов";
-        return;
-      }
-
-      const fakeEmail = username + "@suttongram.app";
-      let res = isSignUp
-        ? await sb.auth.signUp({ email: fakeEmail, password })
-        : await sb.auth.signInWithPassword({ email: fakeEmail, password });
-
-      if (res.error) {
-        errBox.innerText = "Ошибка: " + res.error.message;
-        return;
-      }
-
+      if (!username || password.length < 6) { errBox.innerText = "Введи ник и пароль от 6 символов"; return; }
+      const email = username + "@suttongram.app";
+      const res = isSignUp ? await sb.auth.signUp({ email, password }) : await sb.auth.signInWithPassword({ email, password });
+      if (res.error) { errBox.innerText = res.error.message; return; }
       currentUser = res.data.user;
-
       if (isSignUp) {
         const { count } = await sb.from('profiles').select('*', { count: 'exact', head: true });
-        const isFirstUser = (count === 0);
-
-        await sb.from('profiles').insert({
-          id: currentUser.id,
-          username: username,
-          stars: isFirstUser ? 9999 : 50,
-          is_owner: isFirstUser
-        });
+        const isFirst = (count === 0);
+        await sb.from('profiles').insert({ id: currentUser.id, username, stars: isFirst ? 9999 : 50, is_owner: isFirst });
       }
-
       initApp();
     }
 
     async function initApp() {
       document.getElementById('auth-screen').classList.add('hidden');
       document.getElementById('app-screen').classList.remove('hidden');
-
-      await loadMyProfile();
-      await loadUsers();
-      await loadShop();
-      await loadMyGifts();
-
-      sb.channel('public:messages')
-        .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'messages' }, payload => {
-          const m = payload.new;
-          if (activeChatUser && ((m.sender_id === currentUser.id && m.receiver_id === activeChatUser.id) || (m.sender_id === activeChatUser.id && m.receiver_id === currentUser.id))) {
-            appendMessage(m);
-          }
-        })
-        .subscribe();
+      await loadMyProfile(); await loadUsers(); await loadShop(); await loadMyGifts();
+      sb.channel('public:messages').on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'messages' }, p => {
+        const m = p.new;
+        if (activeChatUser && ((m.sender_id === currentUser.id && m.receiver_id === activeChatUser.id) || (m.sender_id === activeChatUser.id && m.receiver_id === currentUser.id))) appendMessage(m);
+      }).subscribe();
     }
 
     async function loadMyProfile() {
       const { data } = await sb.from('profiles').select('*').eq('id', currentUser.id).single();
       currentProfile = data;
       document.getElementById('my-stars').innerText = data.stars;
-      document.getElementById('profile-name').innerHTML = `@${data.username} ${data.is_owner ? '<span class="owner-tag">Владелец</span>' : ''}`;
+      document.getElementById('profile-name').innerHTML = `@${data.username}${data.is_owner ? '<span class="owner-tag">Владелец</span>' : ''}`;
+      if (data.is_owner) { document.getElementById('profile-role').innerText = "Создатель Suttongram 👑"; document.getElementById('nav-owner').classList.remove('hidden'); }
+    }
+
+    async function loadUsers() {
+      const { data } = await sb.from('profiles').select('*');
+      allUsers = data || [];
+      const list = document.getElementById('users-list'), gs = document.getElementById('gift-recipient'), as = document.getElementById('admin-user-select');
+      list.innerHTML = ""; gs.innerHTML = ""; as.innerHTML = "";
+      allUsers.forEach(u => {
+        as.innerHTML += `<option value="${u.id}">@${u.username} (⭐ ${u.stars})</option>`;
+        if (u.id !== currentUser.id) {
+          gs.innerHTML += `<option value="${u.id}">@${u.username}</option>`;
+          list.innerHTML += `<div class="card"><div><b>@${u.username}</b>${u.is_owner ? '<span class="owner-tag">Владелец</span>' : ''}</div><button class="btn-small" onclick='openChat(${JSON.stringify(u)})'>Чат</button></div>`;
+        }
+      });
+      if (!list.innerHTML) list.innerHTML = "<p>Пока никого нет. Пригласи друзей!</p>";
+    }
+
+    async function openChat(user) {
+      activeChatUser = user;
+      document.getElementById('users-list').classList.add('hidden');
+      document.getElementById('chat-view').classList.remove('hidden');
+      document.getElementById('header-title').innerText = "@" + user.username;
+      const { data } = await sb.from('messages').select('*').or(`and(sender_id.eq.${currentUser.id},receiver_id.eq.${user.id}),and(sender_id.eq.${user.id},receiver_id.eq.${currentUser.id})`).order('created_at', { ascending: true });
+      const box = document.getElementById('messages-box'); box.innerHTML = "";
+      (data || []).forEach(appendMessage);
+    }
+
