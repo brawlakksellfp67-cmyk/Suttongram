@@ -67,3 +67,11 @@ async function call(){const rm="Suttongram_"+me.id.slice(0,6)+ch.id.slice(0,6);a
 function joinC(rm){$('cfrm').src=`https://jit.si{rm}#config.prejoinPageEnabled=false`;$('cmod').classList.remove('hidden')}
 function endC(){$('cfrm').src="";$('cmod').classList.add('hidden')}
 async function loadS(){const gs=await api("/rest/v1/gifts?select=*&order=price.asc");$('slist').innerHTML="";gs.forEach(g=>{$('slist').innerHTML+=`<div class="gcard"><div style="font-size:38px">${g.emoji}</div><b>${g.name}</b><div style="color:#ffd700;margin:4px 0">⭐ ${g.price}</div><button onclick="buy(${g.id},${g.price})" style="padding:7px;font-size:13px">Подарить</button></div>`})}
+async function buy(id,p){const r=$('grec').value;if(!r)return alert("Некому дарить!");if(me.stars<p)return alert("Мало звёзд!");await api("/rest/v1/profiles?id=eq."+me.id,"PATCH",{stars:me.stars-p});await api("/rest/v1/user_gifts","POST",{gift_id:id,sender_id:me.id,receiver_id:r});alert("Подарок отправлен! 🎁");loadU()}
+async function loadG(){const is=await api(`/rest/v1/user_gifts?select=*,gifts(*),sender:profiles!sender_id(username)&receiver_id=eq.${me.id}`);$('mgifts').innerHTML="";is.forEach(i=>{$('mgifts').innerHTML+=`<div class="gcard"><div style="font-size:38px">${i.gifts.emoji}</div><b>${i.gifts.name}</b><div style="color:#7f91a4;font-size:12px">от @${i.sender.username}</div></div>`});if(!$('mgifts').innerHTML)$('mgifts').innerHTML="<p>Подарков пока нет</p>"}
+async function give(){const id=$('ausel').value,a=parseInt($('aamt').value);if(!a)return;const u=us.find(x=>x.id===id);await api("/rest/v1/profiles?id=eq."+id,"PATCH",{stars:u.stars+a});alert("Звёзды выданы!");loadU()}
+async function addG(){const e=$('nge').value.trim(),n=$('ngn').value.trim(),p=parseInt($('ngp').value);if(!e||!n||!p)return alert("Заполни поля");await api("/rest/v1/gifts","POST",{emoji:e,name:n,price:p});alert("Добавлено!");loadS()}
+function tab(t,b){['chats','shop','prof','own'].forEach(x=>$('t-'+x).classList.add('hidden'));$('t-'+t).classList.remove('hidden');document.querySelectorAll('nav button').forEach(x=>x.classList.remove('act'));b.classList.add('act');if(t==='prof')loadG();if(t==='chats')loadU()}
+</script>
+</body>
+</html>
