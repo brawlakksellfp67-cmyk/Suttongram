@@ -4,94 +4,66 @@
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <title>Suttongram</title>
 <style>
-*{box-sizing:border-box;margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;-webkit-tap-highlight-color:transparent}
+*{box-sizing:border-box;margin:0;padding:0;font-family:-apple-system,sans-serif}
 body{background:#0e1621;color:#fff;height:100dvh;display:flex;flex-direction:column;overflow:hidden}
 .hidden{display:none!important}
-#auth-screen{max-width:380px;margin:auto;padding:28px 22px;background:#17212b;border-radius:18px;width:90%;text-align:center;box-shadow:0 8px 24px rgba(0,0,0,.4)}
-.tg-logo{width:72px;height:72px;background:linear-gradient(135deg,#2aabee,#229ed9);border-radius:50%;margin:0 auto 14px;display:flex;align-items:center;justify-content:center;font-size:34px}
-h1{color:#fff;font-size:24px;margin-bottom:6px}p{color:#7f91a4;margin-bottom:18px;font-size:14px}
-input,select{width:100%;padding:13px 14px;margin-bottom:12px;border-radius:12px;border:1px solid #232e3c;background:#242f3d;color:#fff;font-size:15px;outline:none}
-input:focus{border-color:#2aabee}
-button{width:100%;padding:13px;border-radius:12px;border:none;background:#2aabee;color:#fff;font-size:15px;font-weight:600;cursor:pointer;margin-bottom:8px}
-button.secondary{background:#242f3d;color:#2aabee}
-header{background:#17212b;padding:10px 14px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #0e1621;min-height:56px;flex-shrink:0}
-.h-left{display:flex;align-items:center;gap:10px}
-.back-btn{background:none;border:none;color:#2aabee;font-size:22px;width:auto;padding:0 6px;margin:0}
-.stars-badge{background:#242f3d;padding:6px 12px;border-radius:20px;color:#ffd700;font-weight:700;font-size:14px;display:flex;align-items:center;gap:4px}
-.call-btn{background:#242f3d;color:#2aabee;width:38px;height:38px;border-radius:50%;padding:0;margin:0;font-size:18px;display:flex;align-items:center;justify-content:center}
-nav{background:#17212b;display:flex;border-top:1px solid #0e1621;flex-shrink:0;padding-bottom:env(safe-area-inset-bottom)}
-nav button{flex:1;background:none;border-radius:0;margin:0;padding:8px 2px;font-size:11px;color:#7f91a4;display:flex;flex-direction:column;align-items:center;gap:3px;font-weight:500}
-nav button span{font-size:19px}
-nav button.active{color:#2aabee}
+#auth{max-width:380px;margin:auto;padding:24px;background:#17212b;border-radius:18px;width:90%;text-align:center}
+.logo{width:68px;height:68px;background:#2aabee;border-radius:50%;margin:0 auto 12px;display:flex;align-items:center;justify-content:center;font-size:32px}
+input,select{width:100%;padding:12px;margin-bottom:10px;border-radius:12px;border:1px solid #232e3c;background:#242f3d;color:#fff;font-size:15px}
+button{width:100%;padding:12px;border-radius:12px;border:none;background:#2aabee;color:#fff;font-size:15px;font-weight:600;margin-bottom:8px}
+button.sec{background:#242f3d;color:#2aabee}
+header{background:#17212b;padding:10px 14px;display:flex;justify-content:space-between;align-items:center;min-height:54px;flex-shrink:0}
+.stars{background:#242f3d;padding:5px 11px;border-radius:20px;color:#ffd700;font-weight:700;font-size:14px}
+nav{background:#17212b;display:flex;border-top:1px solid #0e1621;flex-shrink:0}
+nav button{flex:1;background:none;border-radius:0;margin:0;padding:8px 2px;font-size:11px;color:#7f91a4}
+nav button.act{color:#2aabee}
 main{flex:1;overflow-y:auto;display:flex;flex-direction:column}
-.chat-item{display:flex;align-items:center;gap:12px;padding:10px 14px;border-bottom:1px solid #131c27;cursor:pointer}
-.chat-item:active{background:#17212b}
-.avatar{width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,#2aabee,#1d7ab8);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:19px;flex-shrink:0;text-transform:uppercase}
-.avatar.sm{width:36px;height:36px;font-size:15px}
-.chat-info{flex:1;min-width:0}
-.chat-top{display:flex;align-items:center;gap:5px;font-weight:600;font-size:16px}
-.verified{background:#2aabee;color:#fff;font-size:10px;width:15px;height:15px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center}
-.sub{color:#7f91a4;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:2px}
-#chat-view{display:flex;flex-direction:column;height:100%;background:#0e1621}
+.row{display:flex;align-items:center;gap:12px;padding:10px 14px;border-bottom:1px solid #131c27}
+.ava{width:46px;height:46px;border-radius:50%;background:#2aabee;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:18px;flex-shrink:0;text-transform:uppercase}
+.ok{background:#2aabee;color:#fff;font-size:10px;padding:1px 5px;border-radius:50%;margin-left:5px}
+#cview{display:flex;flex-direction:column;height:100%}
 #mbox{flex:1;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:6px}
-.msg{max-width:78%;padding:9px 13px;border-radius:16px;font-size:15px;line-height:1.35;word-wrap:break-word;position:relative}
-.msg.mine{background:#2b5278;align-self:flex-end;border-bottom-right-radius:4px}
-.msg.theirs{background:#182533;align-self:flex-start;border-bottom-left-radius:4px}
-.call-card{background:#1f3852;border:1px solid #2aabee;padding:12px;border-radius:14px;text-align:center}
-.call-card button{margin-top:8px;margin-bottom:0;padding:8px 14px;font-size:13px;background:#28a745}
-.chat-bar{background:#17212b;padding:8px 10px;display:flex;gap:8px;align-items:center}
-.chat-bar input{margin:0;flex:1;border-radius:20px;padding:10px 14px;background:#242f3d;border:none}
-.chat-bar button{width:40px;height:40px;border-radius:50%;margin:0;padding:0;font-size:17px;flex-shrink:0}
-.pad{padding:14px}
-.card{background:#17212b;padding:14px;border-radius:14px;margin-bottom:12px}
-.gift-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.gift-card{background:#17212b;padding:16px 10px;border-radius:16px;text-align:center;border:1px solid #1f2c3a}
-#call-modal{position:fixed;inset:0;background:#0e1621;z-index:99;display:flex;flex-direction:column}
-#call-modal iframe{flex:1;border:none;width:100%;height:100%}
-.end-call{background:#e53935;border-radius:0;margin:0;padding:15px;font-size:16px}
+.msg{max-width:78%;padding:9px 13px;border-radius:16px;font-size:15px;word-wrap:break-word}
+.mine{background:#2b5278;align-self:flex-end;border-bottom-right-radius:4px}
+.theirs{background:#182533;align-self:flex-start;border-bottom-left-radius:4px}
+.cbar{background:#17212b;padding:8px;display:flex;gap:8px}.cbar input{margin:0;flex:1;border-radius:20px}.cbar button{width:42px;height:42px;border-radius:50%;margin:0;padding:0}
+.pad{padding:14px}.card{background:#17212b;padding:14px;border-radius:14px;margin-bottom:10px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.gcard{background:#17212b;padding:14px;border-radius:14px;text-align:center}
+#cmod{position:fixed;inset:0;background:#0e1621;z-index:99;display:flex;flex-direction:column}#cmod iframe{flex:1;border:none}
 </style>
 </head>
 <body>
-<div id="auth-screen">
-<div class="tg-logo">✈️</div>
-<h1>Suttongram</h1><p>Быстрый и безопасный мессенджер</p>
-<input id="u-in" placeholder="Никнейм (напр. sutton)"><input type="password" id="p-in" placeholder="Пароль (от 6 символов)">
-<button onclick="auth(0)">Войти</button><button class="secondary" onclick="auth(1)">Создать аккаунт</button>
-<p id="err" style="color:#ff6b6b;margin-top:8px;margin-bottom:0"></p>
+<div id="auth">
+<div class="logo">✈️</div><h2 style="margin-bottom:14px">Suttongram</h2>
+<input id="uin" placeholder="Никнейм (напр. admin)"><input type="password" id="pin" placeholder="Пароль (от 6 символов)">
+<button onclick="auth(0)">Войти</button><button class="sec" onclick="auth(1)">Создать аккаунт</button>
+<p id="err" style="color:#ff6b6b;font-size:13px;margin-top:6px"></p>
 </div>
-<div id="app-screen" class="hidden" style="display:flex;flex-direction:column;height:100dvh">
+<div id="app" class="hidden" style="display:flex;flex-direction:column;height:100dvh">
 <header>
-<div class="h-left">
-<button id="back-btn" class="back-btn hidden" onclick="closeChat()">←</button>
-<div id="h-ava" class="avatar sm hidden"></div>
-<div><div id="hdr" style="font-weight:700;font-size:17px">Suttongram</div><div id="h-sub" style="font-size:12px;color:#2aabee" class="hidden">в сети</div></div>
-</div>
-<div style="display:flex;align-items:center;gap:8px">
-<button id="call-btn" class="call-btn hidden" onclick="startCall()">📞</button>
-<div class="stars-badge">⭐ <span id="stars">0</span></div>
-</div>
+<div style="display:flex;align-items:center;gap:8px"><button id="bbtn" class="sec hidden" onclick="closeC()" style="width:auto;margin:0;padding:6px 10px">←</button><b id="hdr" style="font-size:17px">Suttongram</b></div>
+<div style="display:flex;align-items:center;gap:8px"><button id="cbtn" class="sec hidden" onclick="call()" style="width:auto;margin:0;padding:6px 10px">📞</button><div class="stars">⭐ <span id="st">0</span></div></div>
 </header>
 <main>
-<div id="tab-chats" style="height:100%;display:flex;flex-direction:column">
-<div id="ulist"></div>
-<div id="chat-view" class="hidden">
-<div id="mbox"></div>
-<div class="chat-bar"><input id="minp" placeholder="Сообщение..." onkeydown="if(event.key==='Enter')send()"><button onclick="send()">➤</button></div>
-</div>
-</div>
-<div id="tab-shop" class="hidden pad"><p style="margin-bottom:8px">Выберите получателя подарка:</p><select id="grec"></select><div class="gift-grid" id="slist"></div></div>
-<div id="tab-profile" class="hidden pad"><div class="card" style="display:flex;align-items:center;gap:12px"><div id="p-ava" class="avatar"></div><div><div id="pname" class="chat-top"></div><div id="prole" class="sub">в сети</div></div></div><h3 style="margin:14px 0 10px;font-size:15px;color:#7f91a4">🎁 ПОДАРКИ В ПРОФИЛЕ</h3><div class="gift-grid" id="mgifts"></div><button class="secondary" onclick="location.reload()" style="margin-top:20px">Выйти из аккаунта</button></div>
-<div id="tab-owner" class="hidden pad"><div class="card"><h3 style="margin-bottom:10px;font-size:16px">👑 Выдать звёзды</h3><select id="ausel"></select><input type="number" id="aamt" placeholder="Количество звёзд"><button onclick="giveStars()">Начислить звёзды</button></div><div class="card"><h3 style="margin-bottom:10px;font-size:16px">➕ Добавить подарок</h3><input id="ng-e" placeholder="Эмодзи (напр. 🧸)"><input id="ng-n" placeholder="Название"><input type="number" id="ng-p" placeholder="Цена в звёздах"><button onclick="newGift()">Добавить в магазин</button></div></div>
+<div id="t-chats" style="height:100%;display:flex;flex-direction:column"><div id="ulist"></div><div id="cview" class="hidden"><div id="mbox"></div><div class="cbar"><input id="minp" placeholder="Сообщение..."><button onclick="send()">➤</button></div></div></div>
+<div id="t-shop" class="hidden pad"><select id="grec"></select><div class="grid" id="slist"></div></div>
+<div id="t-prof" class="hidden pad"><div class="card"><b id="pname"></b><div id="prole" style="color:#7f91a4;font-size:13px">в сети</div></div><div class="grid" id="mgifts"></div><button class="sec" onclick="location.reload()" style="margin-top:16px">Выйти</button></div>
+<div id="t-own" class="hidden pad"><div class="card"><select id="ausel"></select><input type="number" id="aamt" placeholder="Сколько звёзд"><button onclick="give()">Выдать звёзды</button></div><div class="card"><input id="nge" placeholder="Эмодзи 🧸"><input id="ngn" placeholder="Название"><input type="number" id="ngp" placeholder="Цена"><button onclick="addG()">Добавить подарок</button></div></div>
 </main>
-<nav id="bnav"><button class="active" onclick="tab('chats',this)"><span>💬</span>Чаты</button><button onclick="tab('shop',this)"><span>🛍️</span>Подарки</button><button onclick="tab('profile',this)"><span>👤</span>Профиль</button><button id="n-own" class="hidden" onclick="tab('owner',this)"><span>👑</span>Админка</button></nav>
+<nav id="bnav"><button class="act" onclick="tab('chats',this)">💬 Чаты</button><button onclick="tab('shop',this)">🛍️ Подарки</button><button onclick="tab('prof',this)">👤 Профиль</button><button id="nown" class="hidden" onclick="tab('own',this)">👑 Админка</button></nav>
 </div>
-<div id="call-modal" class="hidden"><iframe id="call-frame" allow="camera;microphone;fullscreen;display-capture"></iframe><button class="end-call" onclick="endCall()">📵 Завершить звонок</button></div>
+<div id="cmod" class="hidden"><iframe id="cfrm" allow="camera;microphone;fullscreen"></iframe><button onclick="endC()" style="background:#e53935;border-radius:0;margin:0;padding:14px">📵 Сбросить звонок</button></div>
 <script>
-const BASE="https://idashrgfukgszyrqpjid."+"supabase.co",KEY="sb_publishable_wEuPnq7xgewXLeWYmoG5iw_0ZzT25i_";
-const H={"apikey":KEY,"Content-Type":"application/json","Prefer":"return=representation"};
-let me=null,chat=null,users=[],tmr=null;
-const $=id=>document.getElementById(id);
-async function api(p,m="GET",b=null){const r=await fetch(BASE+p,{method:m,headers:H,body:b?JSON.stringify(b):null});const t=await r.text();let d={};try{d=JSON.parse(t)}catch(e){}if(!r.ok)throw new Error(d.msg||d.message||t);return d}
-async function auth(reg){$('err').innerText="Подключение...";try{const u=$('u-in').value.trim().toLowerCase().replace(/[^a-z0-9_]/g,''),p=$('p-in').value;if(!u||p.length<6)throw new Error("Введи ник (англ.) и пароль от 6 символов");const em=u+"@gmail.com";if(reg){const a=await api("/auth/v1/signup","POST",{email:em,password:p});const uid=(a.user&&a.user.id)||a.id;const ex=await api("/rest/v1/profiles?select=id");const f=ex.length===0;const pr=await api("/rest/v1/profiles","POST",{id:uid,username:u,stars:f?9999:50,is_owner:f});me=pr}else{const a=await api("/auth/v1/token?grant_type=password","POST",{email:em,password:p});const pr=await api("/rest/v1/profiles?id=eq."+a.user.id);me=pr}$('auth-screen').classList.add('hidden');$('app-screen').classList.remove('hidden');loadUsers();loadShop()}catch(e){$('err').innerText=e.message}}
-function badge(u){return u.is_owner?'<span class="verified">✓</span>':''}
-function renderMe(){$('stars').innerText=me.stars;$('p-ava').innerText=me.username[0];$('pname').innerHTML=`@${me.username}${badge(me)}`;if(me.is_owner){$('prole').innerText="Создатель Suttongram 👑";$('n-own').classList.remove('hidden')}}
+const B="https://idashrgfukgszyrqpjid."+"supabase.co",K="sb_publishable_wEuPnq7xgewXLeWYmoG5iw_0ZzT25i_",H={"apikey":K,"Content-Type":"application/json","Prefer":"return=representation"},$=i=>document.getElementById(i);
+let me=null,ch=null,us=[],tm=null;
+async function api(p,m="GET",b=null){const r=await fetch(B+p,{method:m,headers:H,body:b?JSON.stringify(b):null}),t=await r.text();let d={};try{d=JSON.parse(t)}catch(e){}if(!r.ok)throw new Error(d.msg||d.message||t);return d}
+async function auth(reg){$('err').innerText="Загрузка...";try{const u=$('uin').value.trim().toLowerCase().replace(/[^a-z0-9_]/g,''),p=$('pin').value;if(!u||p.length<6)throw new Error("Ник (англ.) и пароль от 6 символов");const em=u+"@gmail.com";if(reg){const a=await api("/auth/v1/signup","POST",{email:em,password:p}),uid=(a.user&&a.user.id)||a.id,ex=await api("/rest/v1/profiles?select=id"),f=ex.length===0;me=await api("/rest/v1/profiles","POST",{id:uid,username:u,stars:f?9999:50,is_owner:f})}else{const a=await api("/auth/v1/token?grant_type=password","POST",{email:em,password:p});me=await api("/rest/v1/profiles?id=eq."+a.user.id)}$('auth').classList.add('hidden');$('app').classList.remove('hidden');loadU();loadS()}catch(e){$('err').innerText=e.message}}
+async function loadU(){us=await api("/rest/v1/profiles?select=*");me=us.find(x=>x.id===me.id)||me;$('st').innerText=me.stars;$('pname').innerHTML=`@${me.username}${me.is_owner?'<span class="ok">✓</span>':''}`;if(me.is_owner){$('prole').innerText="Создатель Suttongram 👑";$('nown').classList.remove('hidden')}$('ulist').innerHTML="";$('grec').innerHTML="";$('ausel').innerHTML="";us.forEach(u=>{$('ausel').innerHTML+=`<option value="${u.id}">@${u.username} (⭐${u.stars})</option>`;if(u.id!==me.id){$('grec').innerHTML+=`<option value="${u.id}">@${u.username}</option>`;$('ulist').innerHTML+=`<div class="row" onclick="openC('${u.id}','${u.username}',${u.is_owner})"><div class="ava">${u.username}</div><div><b>@${u.username}${u.is_owner?'<span class="ok">✓</span>':''}</b><div style="color:#7f91a4;font-size:13px">в сети</div></div></div>`}});if(!$('ulist').innerHTML)$('ulist').innerHTML="<p class='pad'>Пока никого нет. Позови друзей!</p>"}
+async function openC(id,n,o){ch={id,n};$('ulist').classList.add('hidden');$('bnav').classList.add('hidden');$('cview').classList.remove('hidden');$('bbtn').classList.remove('hidden');$('cbtn').classList.remove('hidden');$('hdr').innerHTML=`@${n}${o?'<span class="ok">✓</span>':''}`;await loadM();tm=setInterval(loadM,2000)}
+async function loadM(){if(!ch)return;const ms=await api(`/rest/v1/messages?or=(and(sender_id.eq.${me.id},receiver_id.eq.${ch.id}),and(sender_id.eq.${ch.id},receiver_id.eq.${me.id}))&order=created_at.asc`);$('mbox').innerHTML="";ms.forEach(m=>{const d=document.createElement('div');d.className="msg "+(m.sender_id===me.id?"mine":"theirs");if(m.content.startsWith("CALL::")){const rm=m.content.split("::");d.innerHTML=`📞 <b>Звонок</b><br><button onclick="joinC('${rm}')" style="margin-top:6px;padding:6px;background:#28a745">Ответить</button>`}else d.innerText=m.content;$('mbox').appendChild(d)});$('mbox').scrollTop=$('mbox').scrollHeight}
+function closeC(){ch=null;clearInterval(tm);$('cview').classList.add('hidden');$('ulist').classList.remove('hidden');$('bnav').classList.remove('hidden');$('bbtn').classList.add('hidden');$('cbtn').classList.add('hidden');$('hdr').innerText="Suttongram"}
+async function send(c=null){const t=c||$('minp').value.trim();if(!t||!ch)return;if(!c)$('minp').value="";await api("/rest/v1/messages","POST",{sender_id:me.id,receiver_id:ch.id,content:t});loadM()}
+async function call(){const rm="Suttongram_"+[me.id,ch.id].sort().join("").slice(0,14);await send("CALL::"+rm);joinC(rm)}
+function joinC(rm){$('cfrm').src=`https://jit.si{rm}#config.prejoinPageEnabled=false`;$('cmod').classList.remove('hidden')}
+function endC(){$('cfrm').src="";$('cmod').classList.add('hidden')}
+async function loadS(){const gs=await api("/rest/v1/gifts?select=*&order=price.asc");$('slist').innerHTML="";gs.forEach(g=>{$('slist').innerHTML+=`<div class="gcard"><div style="font-size:38px">${g.emoji}</div><b>${g.name}</b><div style="color:#ffd700;margin:4px 0">⭐ ${g.price}</div><button onclick="buy(${g.id},${g.price})" style="padding:7px;font-size:13px">Подарить</button></div>`})}
