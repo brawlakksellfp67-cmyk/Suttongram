@@ -4,74 +4,85 @@
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <title>Suttongram</title>
 <style>
-*{box-sizing:border-box;margin:0;padding:0;font-family:-apple-system,sans-serif}
+*{box-sizing:border-box;margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;-webkit-tap-highlight-color:transparent}
 body{background:#0e1621;color:#fff;height:100dvh;display:flex;flex-direction:column;overflow:hidden}
 .hidden{display:none!important}
-#auth{max-width:380px;margin:auto;padding:24px;background:#17212b;border-radius:18px;width:90%;text-align:center}
-.logo{width:68px;height:68px;background:#2aabee;border-radius:50%;margin:0 auto 12px;display:flex;align-items:center;justify-content:center;font-size:32px}
-input,select{width:100%;padding:12px;margin-bottom:10px;border-radius:12px;border:1px solid #232e3c;background:#242f3d;color:#fff;font-size:15px}
-button{width:100%;padding:12px;border-radius:12px;border:none;background:#2aabee;color:#fff;font-size:15px;font-weight:600;margin-bottom:8px}
+#auth{max-width:380px;margin:auto;padding:26px 22px;background:#17212b;border-radius:20px;width:90%;text-align:center;box-shadow:0 10px 30px rgba(0,0,0,.4)}
+.logo{width:70px;height:70px;background:linear-gradient(135deg,#2aabee,#229ed9);border-radius:50%;margin:0 auto 14px;display:flex;align-items:center;justify-content:center;font-size:34px}
+input,select{width:100%;padding:13px 14px;margin-bottom:10px;border-radius:12px;border:1px solid #232e3c;background:#242f3d;color:#fff;font-size:15px;outline:none}
+button{width:100%;padding:13px;border-radius:12px;border:none;background:#2aabee;color:#fff;font-size:15px;font-weight:600;margin-bottom:8px;cursor:pointer}
 button.sec{background:#242f3d;color:#2aabee}
-header{background:#17212b;padding:10px 14px;display:flex;justify-content:space-between;align-items:center;min-height:54px;flex-shrink:0}
-.stars{background:#242f3d;padding:5px 11px;border-radius:20px;color:#ffd700;font-weight:700;font-size:14px}
-nav{background:#17212b;display:flex;border-top:1px solid #0e1621;flex-shrink:0}
-nav button{flex:1;background:none;border-radius:0;margin:0;padding:10px 2px;font-size:12px;color:#7f91a4}
+header{background:#17212b;padding:10px 14px;display:flex;justify-content:space-between;align-items:center;height:58px;flex-shrink:0;border-bottom:1px solid #0b121b}
+.stars{background:#242f3d;padding:6px 12px;border-radius:20px;color:#ffd700;font-weight:700;font-size:14px}
+nav{background:#17212b;display:grid;grid-auto-flow:column;grid-auto-columns:1fr;border-top:1px solid #0b121b;height:60px;flex-shrink:0;padding-bottom:env(safe-area-inset-bottom)}
+nav button{background:none;border-radius:0;margin:0;padding:6px 2px;font-size:11px;color:#7f91a4;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;font-weight:500}
+nav button i{font-style:normal;font-size:20px;line-height:1}
 nav button.act{color:#2aabee}
 main{flex:1;overflow-y:auto;display:flex;flex-direction:column}
-.row{display:flex;align-items:center;gap:12px;padding:10px 14px;border-bottom:1px solid #131c27}
-.ava{width:46px;height:46px;border-radius:50%;background:#2aabee;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:18px;flex-shrink:0;text-transform:uppercase}
-.ok{background:#2aabee;color:#fff;font-size:10px;padding:1px 5px;border-radius:50%;margin-left:5px}
+.row{display:flex;align-items:center;gap:12px;padding:11px 14px;border-bottom:1px solid #131c27;cursor:pointer}
+.row:active{background:#17212b}
+.ava{width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,#2aabee,#1a7bb9);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:19px;flex-shrink:0;text-transform:uppercase;overflow:hidden;background-size:cover;background-position:center;color:#fff}
+.ava.lg{width:76px;height:76px;font-size:28px;position:relative;cursor:pointer;border:2px solid #2aabee}
+.ava.sm{width:36px;height:36px;font-size:15px}
+.ok{background:#2aabee;color:#fff;font-size:10px;padding:2px 5px;border-radius:50%;margin-left:5px;vertical-align:middle}
 #cview{display:flex;flex-direction:column;height:100%}
 #mbox{flex:1;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:6px}
-.msg{max-width:78%;padding:9px 13px;border-radius:16px;font-size:15px;word-wrap:break-word}
+.msg{max-width:78%;padding:9px 13px;border-radius:16px;font-size:15px;word-wrap:break-word;line-height:1.35}
 .mine{background:#2b5278;align-self:flex-end;border-bottom-right-radius:4px}
 .theirs{background:#182533;align-self:flex-start;border-bottom-left-radius:4px}
-.cbar{background:#17212b;padding:8px;display:flex;gap:8px}.cbar input{margin:0;flex:1;border-radius:20px}.cbar button{width:42px;height:42px;border-radius:50%;margin:0;padding:0}
-.pad{padding:14px}.card{background:#17212b;padding:14px;border-radius:14px;margin-bottom:10px}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.gcard{background:#17212b;padding:14px;border-radius:14px;text-align:center}
-#cmod{position:fixed;inset:0;background:#0e1621;z-index:99;display:flex;flex-direction:column}#cmod iframe{flex:1;border:none}
+.cbar{background:#17212b;padding:8px 10px;display:flex;gap:8px;align-items:center}.cbar input{margin:0;flex:1;border-radius:20px;padding:10px 14px}.cbar button{width:42px;height:42px;border-radius:50%;margin:0;padding:0;flex-shrink:0}
+.pad{padding:14px}.card{background:#17212b;padding:16px;border-radius:16px;margin-bottom:12px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.gcard{background:#17212b;padding:14px;border-radius:16px;text-align:center;border:1px solid #1e2a38}
 </style>
 </head>
 <body>
-<div id="auth">
-<div class="logo">✈️</div><h2 style="margin-bottom:14px">Suttongram</h2>
+<div id="auth" class="hidden">
+<div class="logo">✈️</div><h2 style="margin-bottom:6px">Suttongram</h2><p style="color:#7f91a4;font-size:13px;margin-bottom:16px">Войдите или создайте аккаунт</p>
 <input id="uin" placeholder="Никнейм (напр. admin)"><input type="password" id="pin" placeholder="Пароль (от 6 символов)">
 <button onclick="auth(0)">Войти</button><button class="sec" onclick="auth(1)">Создать аккаунт</button>
 <p id="err" style="color:#ff6b6b;font-size:13px;margin-top:6px"></p>
 </div>
 <div id="app" class="hidden" style="display:flex;flex-direction:column;height:100dvh">
 <header>
-<div style="display:flex;align-items:center;gap:8px"><button id="bbtn" class="sec hidden" onclick="closeC()" style="width:auto;margin:0;padding:6px 10px">←</button><b id="hdr" style="font-size:17px">Suttongram</b></div>
-<div style="display:flex;align-items:center;gap:8px"><button id="cbtn" class="sec hidden" onclick="call()" style="width:auto;margin:0;padding:6px 10px">📞</button><div class="stars">⭐ <span id="st">0</span></div></div>
+<div style="display:flex;align-items:center;gap:10px"><button id="bbtn" class="sec hidden" onclick="closeC()" style="width:auto;margin:0;padding:6px 10px;font-size:18px">←</button><div id="hava" class="ava sm hidden"></div><div><b id="hdr" style="font-size:17px">Suttongram</b><div id="hsub" class="hidden" style="font-size:11px;color:#2aabee">в сети</div></div></div>
+<div style="display:flex;align-items:center;gap:8px"><button id="cbtn" class="sec hidden" onclick="call()" style="width:38px;height:38px;border-radius:50%;margin:0;padding:0;font-size:17px">📞</button><div class="stars">⭐ <span id="st">0</span></div></div>
 </header>
 <main>
-<div id="t-chats" style="height:100%;display:flex;flex-direction:column"><div id="ulist"></div><div id="cview" class="hidden"><div id="mbox"></div><div class="cbar"><input id="minp" placeholder="Сообщение..."><button onclick="send()">➤</button></div></div></div>
-<div id="t-shop" class="hidden pad"><select id="grec"></select><div class="grid" id="slist"></div></div>
-<div id="t-prof" class="hidden pad"><div class="card"><b id="pname"></b><div id="prole" style="color:#7f91a4;font-size:13px">в сети</div></div><div class="grid" id="mgifts"></div><button class="sec" onclick="location.reload()" style="margin-top:16px">Выйти</button></div>
-<div id="t-own" class="hidden pad"><div class="card"><select id="ausel"></select><input type="number" id="aamt" placeholder="Сколько звёзд"><button onclick="give()">Выдать звёзды</button></div><div class="card"><input id="nge" placeholder="Эмодзи 🧸"><input id="ngn" placeholder="Название"><input type="number" id="ngp" placeholder="Цена"><button onclick="addG()">Добавить подарок</button></div></div>
-</main>
-<nav id="bnav"><button class="act" onclick="tab('chats',this)">💬 Чаты</button><button onclick="tab('shop',this)">🛍️ Подарки</button><button onclick="tab('prof',this)">👤 Профиль</button><button id="nown" class="hidden" onclick="tab('own',this)">👑 Админка</button></nav>
+<div id="t-chats" style="height:100%;display:flex;flex-direction:column"><div id="ulist"></div><div id="cview" class="hidden"><div id="mbox"></div><div class="cbar"><input id="minp" placeholder="Сообщение..." onkeydown="if(event.key==='Enter')send()"><button onclick="send()">➤</button></div></div></div>
+<div id="t-shop" class="hidden pad"><p style="color:#7f91a4;font-size:13px;margin-bottom:8px">Кому подарить:</p><select id="grec"></select><div class="grid" id="slist"></div></div>
+<div id="t-prof" class="hidden pad">
+<div class="card" style="display:flex;align-items:center;gap:14px">
+<div id="pava" class="ava lg" onclick="$('ava-in').click()" title="Нажми, чтобы сменить фото"></div>
+<input type="file" id="ava-in" accept="image/*" class="hidden" onchange="upAva(this)">
+<div><b id="pname" style="font-size:18px"></b><div id="prole" style="color:#2aabee;font-size:13px;margin-top:2px">в сети</div><div onclick="$('ava-in').click()" style="color:#7f91a4;font-size:12px;margin-top:6px;cursor:pointer">📷 Сменить аватарку</div></div>
 </div>
-<div id="cmod" class="hidden"><iframe id="cfrm" allow="camera;microphone;fullscreen"></iframe><button onclick="endC()" style="background:#e53935;border-radius:0;margin:0;padding:14px">📵 Сбросить звонок</button></div>
+<div style="color:#7f91a4;font-size:12px;font-weight:700;margin:14px 0 8px">🎁 МОИ ПОДАРКИ</div>
+<div class="grid" id="mgifts"></div>
+<button class="sec" onclick="logout()" style="margin-top:20px;color:#ff6b6b">Выйти из аккаунта</button>
+</div>
+<div id="t-own" class="hidden pad"><div class="card"><h4 style="margin-bottom:10px">👑 Выдать звёзды</h4><select id="ausel"></select><input type="number" id="aamt" placeholder="Сколько звёзд"><button onclick="give()">Начислить</button></div><div class="card"><h4 style="margin-bottom:10px">➕ Новый подарок</h4><input id="nge" placeholder="Эмодзи 🧸"><input id="ngn" placeholder="Название"><input type="number" id="ngp" placeholder="Цена"><button onclick="addG()">Добавить</button></div></div>
+</main>
+<nav id="bnav"><button class="act" onclick="tab('chats',this)"><i>💬</i>Чаты</button><button onclick="tab('shop',this)"><i>🛍️</i>Подарки</button><button onclick="tab('prof',this)"><i>👤</i>Профиль</button><button id="nown" class="hidden" onclick="tab('own',this)"><i>👑</i>Админка</button></nav>
+</div>
 <script>
 const B="https://idashrgfukgszyrqpjid."+"supabase.co",K="sb_publishable_wEuPnq7xgewXLeWYmoG5iw_0ZzT25i_",H={"apikey":K,"Content-Type":"application/json","Prefer":"return=representation"},$=i=>document.getElementById(i);
 let me=null,ch=null,us=[],tm=null;
 async function api(p,m="GET",b=null){const r=await fetch(B+p,{method:m,headers:H,body:b?JSON.stringify(b):null}),t=await r.text();let d={};try{d=JSON.parse(t)}catch(e){}if(!r.ok)throw new Error(d.msg||d.message||t);return d}
-async function auth(reg){$('err').innerText="Загрузка...";try{const u=$('uin').value.trim().toLowerCase().replace(/[^a-z0-9_]/g,''),p=$('pin').value;if(!u||p.length<6)throw new Error("Ник (англ.) и пароль от 6 символов");const em=u+"@gmail.com";if(reg){const a=await api("/auth/v1/signup","POST",{email:em,password:p}),uid=(a.user&&a.user.id)||a.id,ex=await api("/rest/v1/profiles?select=id"),f=ex.length===0,pr=await api("/rest/v1/profiles","POST",{id:uid,username:u,stars:f?9999:50,is_owner:f});me=pr.at(0)}else{const a=await api("/auth/v1/token?grant_type=password","POST",{email:em,password:p}),pr=await api("/rest/v1/profiles?id=eq."+a.user.id);me=pr.at(0)}if(!me)throw new Error("Профиль не найден");$('auth').classList.add('hidden');$('app').classList.remove('hidden');loadU();loadS()}catch(e){$('err').innerText=e.message}}
-async function loadU(){us=await api("/rest/v1/profiles?select=*");me=us.find(x=>x.id===me.id)||me;$('st').innerText=me.stars;$('pname').innerHTML=`@${me.username}${me.is_owner?'<span class="ok">✓</span>':''}`;if(me.is_owner){$('prole').innerText="Создатель Suttongram 👑";$('nown').classList.remove('hidden')}$('ulist').innerHTML="";$('grec').innerHTML="";$('ausel').innerHTML="";us.forEach(u=>{$('ausel').innerHTML+=`<option value="${u.id}">@${u.username} (⭐${u.stars})</option>`;if(u.id!==me.id){$('grec').innerHTML+=`<option value="${u.id}">@${u.username}</option>`;$('ulist').innerHTML+=`<div class="row" onclick="openC('${u.id}','${u.username}',${u.is_owner})"><div class="ava">${u.username}</div><div><b>@${u.username}${u.is_owner?'<span class="ok">✓</span>':''}</b><div style="color:#7f91a4;font-size:13px">в сети</div></div></div>`}});if(!$('ulist').innerHTML)$('ulist').innerHTML="<p class='pad'>Пока никого нет. Позови друзей!</p>"}
-async function openC(id,n,o){ch={id,n};$('ulist').classList.add('hidden');$('bnav').classList.add('hidden');$('cview').classList.remove('hidden');$('bbtn').classList.remove('hidden');$('cbtn').classList.remove('hidden');$('hdr').innerHTML=`@${n}${o?'<span class="ok">✓</span>':''}`;await loadM();tm=setInterval(loadM,2000)}
-async function loadM(){if(!ch)return;const ms=await api(`/rest/v1/messages?or=(and(sender_id.eq.${me.id},receiver_id.eq.${ch.id}),and(sender_id.eq.${ch.id},receiver_id.eq.${me.id}))&order=created_at.asc`);$('mbox').innerHTML="";ms.forEach(m=>{const d=document.createElement('div');d.className="msg "+(m.sender_id===me.id?"mine":"theirs");if(m.content.startsWith("CALL::")){const rm=m.content.split("::").at(1);d.innerHTML=`📞 <b>Звонок</b><br><button onclick="joinC('${rm}')" style="margin-top:6px;padding:6px;background:#28a745">Ответить</button>`}else d.innerText=m.content;$('mbox').appendChild(d)});$('mbox').scrollTop=$('mbox').scrollHeight}
-function closeC(){ch=null;clearInterval(tm);$('cview').classList.add('hidden');$('ulist').classList.remove('hidden');$('bnav').classList.remove('hidden');$('bbtn').classList.add('hidden');$('cbtn').classList.add('hidden');$('hdr').innerText="Suttongram"}
+function setAva(el,u){if(u&&u.avatar){el.style.backgroundImage=`url(${u.avatar})`;el.innerText=""}else{el.style.backgroundImage="none";el.innerText=u?u.username:"?"}}
+async function init(){const sid=localStorage.getItem("sg_uid");if(sid){try{const pr=await api("/rest/v1/profiles?id=eq."+sid);if(pr.at(0)){me=pr.at(0);enterApp();return}}catch(e){}}$('auth').classList.remove('hidden')}
+function enterApp(){localStorage.setItem("sg_uid",me.id);$('auth').classList.add('hidden');$('app').classList.remove('hidden');loadU();loadS()}
+function logout(){localStorage.removeItem("sg_uid");location.reload()}
+async function auth(reg){$('err').innerText="Загрузка...";try{const u=$('uin').value.trim().toLowerCase().replace(/[^a-z0-9_]/g,''),p=$('pin').value;if(!u||p.length<6)throw new Error("Ник (англ.) и пароль от 6 символов");const em=u+"@gmail.com";if(reg){const a=await api("/auth/v1/signup","POST",{email:em,password:p}),uid=(a.user&&a.user.id)||a.id,ex=await api("/rest/v1/profiles?select=id"),f=ex.length===0,pr=await api("/rest/v1/profiles","POST",{id:uid,username:u,stars:f?9999:50,is_owner:f});me=pr.at(0)}else{const a=await api("/auth/v1/token?grant_type=password","POST",{email:em,password:p}),pr=await api("/rest/v1/profiles?id=eq."+a.user.id);me=pr.at(0)}if(!me)throw new Error("Профиль не найден");enterApp()}catch(e){$('err').innerText=e.message}}
+async function loadU(){us=await api("/rest/v1/profiles?select=*");me=us.find(x=>x.id===me.id)||me;$('st').innerText=me.stars;setAva($('pava'),me);$('pname').innerHTML=`@${me.username}${me.is_owner?'<span class="ok">✓</span>':''}`;if(me.is_owner){$('prole').innerText="Создатель Suttongram 👑";$('nown').classList.remove('hidden')}$('ulist').innerHTML="";$('grec').innerHTML="";$('ausel').innerHTML="";us.forEach(u=>{$('ausel').innerHTML+=`<option value="${u.id}">@${u.username} (⭐${u.stars})</option>`;if(u.id!==me.id){$('grec').innerHTML+=`<option value="${u.id}">@${u.username}</option>`;const row=document.createElement('div');row.className='row';row.onclick=()=>openC(u);const av=document.createElement('div');av.className='ava';setAva(av,u);row.appendChild(av);row.innerHTML+=`<div><b>@${u.username}${u.is_owner?'<span class="ok">✓</span>':''}</b><div style="color:#7f91a4;font-size:13px">в сети</div></div>`;$('ulist').appendChild(row)}});if(!$('ulist').innerHTML)$('ulist').innerHTML="<p class='pad' style='color:#7f91a4'>Пока никого нет. Отправьте ссылку друзьям!</p>"}
+function upAva(inp){const f=inp.files.at(0);if(!f)return;const r=new FileReader();r.onload=e=>{const img=new Image();img.onload=async()=>{const c=document.createElement('canvas'),s=160;c.width=s;c.height=s;c.getContext('2d').drawImage(img,0,0,s,s);const b64=c.toDataURL('image/jpeg',0.75);await api("/rest/v1/profiles?id=eq."+me.id,"PATCH",{avatar:b64});me.avatar=b64;setAva($('pava'),me);alert("Аватарка обновлена! ✨")};img.src=e.target.result};r.readAsDataURL(f)}
+async function openC(u){ch=u;$('ulist').classList.add('hidden');$('bnav').classList.add('hidden');$('cview').classList.remove('hidden');$('bbtn').classList.remove('hidden');$('cbtn').classList.remove('hidden');$('hava').classList.remove('hidden');$('hsub').classList.remove('hidden');setAva($('hava'),u);$('hdr').innerHTML=`@${u.username}${u.is_owner?'<span class="ok">✓</span>':''}`;await loadM();tm=setInterval(loadM,2000)}
+async function loadM(){if(!ch)return;const ms=await api(`/rest/v1/messages?or=(and(sender_id.eq.${me.id},receiver_id.eq.${ch.id}),and(sender_id.eq.${ch.id},receiver_id.eq.${me.id}))&order=created_at.asc`);$('mbox').innerHTML="";ms.forEach(m=>{const d=document.createElement('div');d.className="msg "+(m.sender_id===me.id?"mine":"theirs");if(m.content.startsWith("CALL::")){const rm=m.content.split("::").at(1);d.innerHTML=`📞 <b>Звонок</b><br><button onclick="joinC('${rm}')" style="margin-top:6px;padding:7px;background:#28a745;font-size:13px">Ответить</button>`}else d.innerText=m.content;$('mbox').appendChild(d)});$('mbox').scrollTop=$('mbox').scrollHeight}
+function closeC(){ch=null;clearInterval(tm);$('cview').classList.add('hidden');$('ulist').classList.remove('hidden');$('bnav').classList.remove('hidden');$('bbtn').classList.add('hidden');$('cbtn').classList.add('hidden');$('hava').classList.add('hidden');$('hsub').classList.add('hidden');$('hdr').innerText="Suttongram"}
 async function send(c=null){const t=c||$('minp').value.trim();if(!t||!ch)return;if(!c)$('minp').value="";await api("/rest/v1/messages","POST",{sender_id:me.id,receiver_id:ch.id,content:t});loadM()}
-async function call(){const rm="Suttongram_"+me.id.slice(0,6)+ch.id.slice(0,6);await send("CALL::"+rm);joinC(rm)}
+async function call(){const rm="SuttongramCall"+me.id.slice(0,5)+ch.id.slice(0,5);await send("CALL::"+rm);joinC(rm)}
 function joinC(rm){window.open("https://"+"vdo"+".ninja/?room="+rm+"&wc=0&as=1","_blank")}
-function endC(){$('cfrm').src="";$('cmod').classList.add('hidden')}
-async function loadS(){const gs=await api("/rest/v1/gifts?select=*&order=price.asc");$('slist').innerHTML="";gs.forEach(g=>{$('slist').innerHTML+=`<div class="gcard"><div style="font-size:38px">${g.emoji}</div><b>${g.name}</b><div style="color:#ffd700;margin:4px 0">⭐ ${g.price}</div><button onclick="buy(${g.id},${g.price})" style="padding:7px;font-size:13px">Подарить</button></div>`})}
+async function loadS(){const gs=await api("/rest/v1/gifts?select=*&order=price.asc");$('slist').innerHTML="";gs.forEach(g=>{$('slist').innerHTML+=`<div class="gcard"><div style="font-size:40px">${g.emoji}</div><b>${g.name}</b><div style="color:#ffd700;margin:5px 0;font-weight:700">⭐ ${g.price}</div><button onclick="buy(${g.id},${g.price})" style="padding:8px;font-size:13px">Подарить</button></div>`})}
 async function buy(id,p){const r=$('grec').value;if(!r)return alert("Некому дарить!");if(me.stars<p)return alert("Мало звёзд!");await api("/rest/v1/profiles?id=eq."+me.id,"PATCH",{stars:me.stars-p});await api("/rest/v1/user_gifts","POST",{gift_id:id,sender_id:me.id,receiver_id:r});alert("Подарок отправлен! 🎁");loadU()}
-async function loadG(){const is=await api(`/rest/v1/user_gifts?select=*,gifts(*),sender:profiles!sender_id(username)&receiver_id=eq.${me.id}`);$('mgifts').innerHTML="";is.forEach(i=>{$('mgifts').innerHTML+=`<div class="gcard"><div style="font-size:38px">${i.gifts.emoji}</div><b>${i.gifts.name}</b><div style="color:#7f91a4;font-size:12px">от @${i.sender.username}</div></div>`});if(!$('mgifts').innerHTML)$('mgifts').innerHTML="<p>Подарков пока нет</p>"}
+async function loadG(){const is=await api(`/rest/v1/user_gifts?select=*,gifts(*),sender:profiles!sender_id(username)&receiver_id=eq.${me.id}`);$('mgifts').innerHTML="";is.forEach(i=>{$('mgifts').innerHTML+=`<div class="gcard"><div style="font-size:40px">${i.gifts.emoji}</div><b>${i.gifts.name}</b><div style="color:#7f91a4;font-size:12px">от @${i.sender.username}</div></div>`});if(!$('mgifts').innerHTML)$('mgifts').innerHTML="<p style='color:#7f91a4;font-size:13px'>Подарков пока нет</p>"}
 async function give(){const id=$('ausel').value,a=parseInt($('aamt').value);if(!a)return;const u=us.find(x=>x.id===id);await api("/rest/v1/profiles?id=eq."+id,"PATCH",{stars:u.stars+a});alert("Звёзды выданы!");loadU()}
 async function addG(){const e=$('nge').value.trim(),n=$('ngn').value.trim(),p=parseInt($('ngp').value);if(!e||!n||!p)return alert("Заполни поля");await api("/rest/v1/gifts","POST",{emoji:e,name:n,price:p});alert("Добавлено!");loadS()}
-function tab(t,b){['chats','shop','prof','own'].forEach(x=>$('t-'+x).classList.add('hidden'));$('t-'+t).classList.remove('hidden');document.querySelectorAll('nav button').forEach(x=>x.classList.remove('act'));b.classList.add('act');if(t==='prof')loadG();if(t==='chats')loadU()}
-</script>
-</body>
-</html>
