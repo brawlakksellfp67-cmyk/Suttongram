@@ -122,7 +122,27 @@ async function call(){const rm="SuttongramCall"+me.id.slice(0,5)+ch.id.slice(0,5
 function joinC(rm){window.open("https://"+"vdo"+".ninja/?room="+rm+"&wc=0&as=1","_blank");}
 let gImg="";
 function gIcon(v){return v&&v.startsWith("data:image")?`<img src="${v}" style="width:68px;height:68px;object-fit:cover;border-radius:14px;margin:0 auto 6px;display:block">`:`<div style="font-size:40px;margin-bottom:4px">${v}</div>`;}
-function prevG(inp){const f=inp.files.at(0);if(!f)return;const r=new FileReader();r.onload=e=>{const img=new Image();img.onload=()=>{const c=document.createElement('canvas'),s=180;c.width=s;c.height=s;c.getContext('2d').drawImage(img,0,0,s,s);gImg=c.toDataURL('image/jpeg',0.8);$('ngf-btn').innerText="✅ Картинка выбрана";};img.src=e.target.result;};r.readAsDataURL(f);}
+function prevG(inp){
+  const f=inp.files&&inp.files[0];
+  if(!f)return;
+  $('ngf-btn').innerText="⏳ Сжимаю фото...";
+  const url=URL.createObjectURL(f);
+  const img=new Image();
+  img.onload=()=>{
+    const c=document.createElement('canvas'),s=160;
+    c.width=s;c.height=s;
+    c.getContext('2d').drawImage(img,0,0,s,s);
+    gImg=c.toDataURL('image/jpeg',0.75);
+    URL.revokeObjectURL(url);
+    $('ngf-btn').innerText="✅ Картинка готова!";
+  };
+  img.onerror=()=>{
+    URL.revokeObjectURL(url);
+    alert("Не удалось прочитать это фото, попробуй другое");
+    $('ngf-btn').innerText="🖼️ Выбрать картинку из галереи";
+  };
+  img.src=url;
+}
 async function loadS(){const gs=await api("/rest/v1/gifts?select=*&order=price.asc");$('slist').innerHTML="";if($('aglist'))$('aglist').innerHTML="";gs.forEach(g=>{$('slist').innerHTML+=`<div class="gcard">${gIcon(g.emoji)}<b>${g.name}</b><div style="color:#ffd700;margin:4px 0">⭐ ${g.price}</div><button onclick="buy(${g.id},${g.price})" style="padding:7px;font-size:13px">Подарить</button></div>`;if($('aglist'))$('aglist').innerHTML+=`<div class="card" style="display:flex;justify-content:space-between;align-items:center"><div style="display:flex;align-items:center;gap:10px">${g.emoji.startsWith("data:image")?`<img src="${g.emoji}" style="width:40px;height:40px;border-radius:8px;object-fit:cover">`:`<span style="font-size:26px">${g.emoji}</span>`}<div><b>${g.name}</b><div style="color:#ffd700;font-size:12px">⭐ ${g.price}</div></div></div><button class="btn-sm" style="background:#e53935" onclick="delG(${g.id})">Удалить</button></div>`;});}
 async function delG(id){if(!confirm("Удалить этот подарок из магазина?"))return;await api("/rest/v1/user_gifts?gift_id=eq."+id,"DELETE");await api("/rest/v1/gifts?id=eq."+id,"DELETE");loadS();}
 async function buy(id,p){const r=$('grec').value;if(!r)return alert("Добавь друга в 👥 Друзья!");if(me.stars<p)return alert("Мало звёзд!");await api("/rest/v1/profiles?id=eq."+me.id,"PATCH",{stars:me.stars-p});await api("/rest/v1/user_gifts","POST",{gift_id:id,sender_id:me.id,receiver_id:r});alert("Подарок отправлен! 🎁");loadAll();}
