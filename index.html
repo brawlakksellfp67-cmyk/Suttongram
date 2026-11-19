@@ -4,8 +4,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Suttongram</title>
-  <script src="//cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: sans-serif; }
     body { background: #0e1621; color: #fff; height: 100vh; display: flex; flex-direction: column; }
@@ -45,7 +43,7 @@
     <input type="password" id="password-input" placeholder="Пароль (от 6 символов)" />
     <button onclick="handleAuth(false)">Войти</button>
     <button class="secondary" onclick="handleAuth(true)">Создать аккаунт</button>
-    <p id="auth-error" style="color: #ff6b6b;"></p>
+    <p id="auth-error" style="color: #ff6b6b; margin-top: 10px; word-break: break-word;"></p>
   </div>
 
   <div id="app-screen" class="hidden" style="display: flex; flex-direction: column; height: 100vh;">
@@ -103,27 +101,40 @@
     </nav>
   </div>
 
-  <script>
-    const sb = supabase.createClient("https://supabase.co", "sb_publishable_wEuPnq7xgewXLeWYmoG5iw_0ZzT25i_");
+  <script type="module">
+    import { createClient } from 'https://esm.sh';
+
+    const url = "https://" + "idashrgfukgszyrqpjid" + ".supabase.co";
+    const key = "sb_publishable_wEuPnq7xgewXLeWYmoG5iw_0ZzT25i_";
+    const sb = createClient(url, key);
+
     let currentUser = null, currentProfile = null, activeChatUser = null, allUsers = [];
 
-    async function handleAuth(isSignUp) {
-      const username = document.getElementById('username-input').value.trim().toLowerCase();
-      const password = document.getElementById('password-input').value;
+    window.handleAuth = async function(isSignUp) {
       const errBox = document.getElementById('auth-error');
-      errBox.innerText = "";
-      if (!username || password.length < 6) { errBox.innerText = "Введи ник и пароль от 6 символов"; return; }
-      const email = username + "@suttongram.app";
-      const res = isSignUp ? await sb.auth.signUp({ email, password }) : await sb.auth.signInWithPassword({ email, password });
-      if (res.error) { errBox.innerText = res.error.message; return; }
-      currentUser = res.data.user;
-      if (isSignUp) {
-        const { count } = await sb.from('profiles').select('*', { count: 'exact', head: true });
-        const isFirst = (count === 0);
-        await sb.from('profiles').insert({ id: currentUser.id, username, stars: isFirst ? 9999 : 50, is_owner: isFirst });
+      errBox.innerText = "Подключаюсь...";
+      try {
+        const username = document.getElementById('username-input').value.trim().toLowerCase().replace(/[^a-z0-9_]/g, '');
+        const password = document.getElementById('password-input').value;
+        if (!username || password.length < 6) {
+          errBox.innerText = "Введи ник (английскими буквами) и пароль от 6 символов";
+          return;
+        }
+        const email = username + "@gmail.com";
+        const res = isSignUp ? await sb.auth.signUp({ email, password }) : await sb.auth.signInWithPassword({ email, password });
+        if (res.error) { errBox.innerText = "Ошибка входа: " + res.error.message; return; }
+        currentUser = res.data.user;
+        if (isSignUp) {
+          const { count } = await sb.from('profiles').select('*', { count: 'exact', head: true });
+          const isFirst = (!count || count === 0);
+          const ins = await sb.from('profiles').insert({ id: currentUser.id, username, stars: isFirst ? 9999 : 50, is_owner: isFirst });
+          if (ins.error) { errBox.innerText = "Ошибка профиля: " + ins.error.message; return; }
+        }
+        initApp();
+      } catch (e) {
+        errBox.innerText = "Сбой: " + e.message;
       }
-      initApp();
-    }
+    };
 
     async function initApp() {
       document.getElementById('auth-screen').classList.add('hidden');
@@ -158,13 +169,7 @@
       if (!list.innerHTML) list.innerHTML = "<p>Пока никого нет. Пригласи друзей!</p>";
     }
 
-    async function openChat(user) {
+    window.openChat = async function(user) {
       activeChatUser = user;
       document.getElementById('users-list').classList.add('hidden');
       document.getElementById('chat-view').classList.remove('hidden');
-      document.getElementById('header-title').innerText = "@" + user.username;
-      const { data } = await sb.from('messages').select('*').or(`and(sender_id.eq.${currentUser.id},receiver_id.eq.${user.id}),and(sender_id.eq.${user.id},receiver_id.eq.${currentUser.id})`).order('created_at', { ascending: true });
-      const box = document.getElementById('messages-box'); box.innerHTML = "";
-      (data || []).forEach(appendMessage);
-    }
-
