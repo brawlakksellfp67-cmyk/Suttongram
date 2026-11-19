@@ -64,7 +64,7 @@ async function loadM(){if(!ch)return;const ms=await api(`/rest/v1/messages?or=(a
 function closeC(){ch=null;clearInterval(tm);$('cview').classList.add('hidden');$('ulist').classList.remove('hidden');$('bnav').classList.remove('hidden');$('bbtn').classList.add('hidden');$('cbtn').classList.add('hidden');$('hdr').innerText="Suttongram"}
 async function send(c=null){const t=c||$('minp').value.trim();if(!t||!ch)return;if(!c)$('minp').value="";await api("/rest/v1/messages","POST",{sender_id:me.id,receiver_id:ch.id,content:t});loadM()}
 async function call(){const rm="Suttongram_"+me.id.slice(0,6)+ch.id.slice(0,6);await send("CALL::"+rm);joinC(rm)}
-function joinC(rm){$('cfrm').src=`https://jit.si{rm}#config.prejoinPageEnabled=false`;$('cmod').classList.remove('hidden')}
+function joinC(rm){window.open("https://"+"vdo"+".ninja/?room="+rm+"&wc=0&as=1","_blank")}
 function endC(){$('cfrm').src="";$('cmod').classList.add('hidden')}
 async function loadS(){const gs=await api("/rest/v1/gifts?select=*&order=price.asc");$('slist').innerHTML="";gs.forEach(g=>{$('slist').innerHTML+=`<div class="gcard"><div style="font-size:38px">${g.emoji}</div><b>${g.name}</b><div style="color:#ffd700;margin:4px 0">⭐ ${g.price}</div><button onclick="buy(${g.id},${g.price})" style="padding:7px;font-size:13px">Подарить</button></div>`})}
 async function buy(id,p){const r=$('grec').value;if(!r)return alert("Некому дарить!");if(me.stars<p)return alert("Мало звёзд!");await api("/rest/v1/profiles?id=eq."+me.id,"PATCH",{stars:me.stars-p});await api("/rest/v1/user_gifts","POST",{gift_id:id,sender_id:me.id,receiver_id:r});alert("Подарок отправлен! 🎁");loadU()}
