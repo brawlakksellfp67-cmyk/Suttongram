@@ -5,36 +5,49 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <title>Suttongram</title>
 <style>
-*{box-sizing:border-box;margin:0;padding:0;font-family:-apple-system,sans-serif}
+*{box-sizing:border-box;margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;-webkit-tap-highlight-color:transparent}
 body{background:#0e1621;color:#fff;height:100dvh;display:flex;flex-direction:column;overflow:hidden}
 .hidden{display:none!important}
-#auth{max-width:380px;margin:auto;padding:24px;background:#17212b;border-radius:20px;width:90%;text-align:center}
-.logo{width:68px;height:68px;background:#2aabee;border-radius:50%;margin:0 auto 12px;display:flex;align-items:center;justify-content:center;font-size:32px}
-input,select{width:100%;padding:12px;margin-bottom:10px;border-radius:12px;border:1px solid #232e3c;background:#242f3d;color:#fff;font-size:15px}
-button{width:100%;padding:12px;border-radius:12px;border:none;background:#2aabee;color:#fff;font-size:15px;font-weight:600;margin-bottom:8px}
+#auth{max-width:380px;margin:auto;padding:26px 22px;background:#17212b;border-radius:22px;width:90%;text-align:center}
+.logo{width:70px;height:70px;background:linear-gradient(135deg,#2aabee,#229ed9);border-radius:50%;margin:0 auto 14px;display:flex;align-items:center;justify-content:center;font-size:34px}
+input,select{width:100%;padding:12px 14px;margin-bottom:10px;border-radius:14px;border:1px solid #232e3c;background:#242f3d;color:#fff;font-size:15px;outline:none}
+button{width:100%;padding:12px;border-radius:14px;border:none;background:#2aabee;color:#fff;font-size:15px;font-weight:600;margin-bottom:8px;cursor:pointer}
 button.sec{background:#242f3d;color:#2aabee}
 header{background:#17212b;padding:10px 14px;display:flex;justify-content:space-between;align-items:center;height:56px;flex-shrink:0}
-.stars{background:#242f3d;padding:5px 11px;border-radius:20px;color:#ffd700;font-weight:700;font-size:14px}
-nav{background:#17212b;display:grid;grid-auto-flow:column;grid-auto-columns:1fr;border-top:1px solid #0b121b;height:58px;flex-shrink:0}
-nav button{background:none;border-radius:0;margin:0;padding:6px 2px;font-size:11px;color:#7f91a4;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px}
-nav button.act{color:#2aabee}
-main{flex:1;overflow-y:auto;display:flex;flex-direction:column}
-.row{display:flex;align-items:center;gap:12px;padding:11px 14px;border-bottom:1px solid #131c27}
-.ava{width:46px;height:46px;border-radius:50%;background:#2aabee;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:18px;flex-shrink:0;text-transform:uppercase;background-size:cover;background-position:center}
-.ava.lg{width:74px;height:74px;font-size:26px;border:2px solid #2aabee}
-.ok{background:#2aabee;color:#fff;font-size:10px;padding:1px 5px;border-radius:50%;margin-left:5px}
+.stars{background:#242f3d;padding:5px 12px;border-radius:20px;color:#ffd700;font-weight:700;font-size:14px}
+.search-wrap{background:#17212b;padding:0 12px 10px;flex-shrink:0}
+.search-box{background:#242f3d;border-radius:20px;padding:8px 14px;display:flex;align-items:center;gap:8px;color:#7f91a4}
+.search-box input{background:none;border:none;margin:0;padding:0;font-size:15px;color:#fff}
+.tabs-bar{background:#17212b;display:flex;gap:18px;padding:0 16px 10px;border-bottom:1px solid #0b121b;font-size:14px;font-weight:600;color:#7f91a4;flex-shrink:0}
+.tabs-bar span.act{color:#2aabee;position:relative}
+.tabs-bar span.act::after{content:"";position:absolute;left:0;right:0;bottom:-10px;height:3px;background:#2aabee;border-radius:3px}
+main{flex:1;overflow-y:auto;display:flex;flex-direction:column;padding-bottom:76px}
+.row{display:flex;align-items:center;gap:12px;padding:10px 14px;border-bottom:1px solid #131c27;cursor:pointer}
+.row:active{background:#17212b}
+.ava{width:50px;height:50px;border-radius:50%;background:linear-gradient(135deg,#3b9ee3,#1e73b8);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:18px;flex-shrink:0;text-transform:uppercase;background-size:cover;background-position:center;overflow:hidden;color:#fff}
+.ava.lg{width:76px;height:76px;font-size:26px;border:2px solid #2aabee}
+.ava.xs{width:22px;height:22px;font-size:10px;margin-bottom:2px}
+.r-mid{flex:1;min-width:0}
+.r-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:3px}
+.r-name{font-weight:600;font-size:16px;display:flex;align-items:center;gap:5px}
+.r-time{font-size:12px;color:#7f91a4}
+.r-msg{font-size:14px;color:#7f91a4;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ok{background:#2aabee;color:#fff;font-size:10px;width:16px;height:16px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center}
+#bnav{position:fixed;bottom:10px;left:12px;right:12px;background:rgba(23,33,43,0.94);backdrop-filter:blur(10px);border:1px solid #233040;border-radius:28px;display:grid;grid-auto-flow:column;grid-auto-columns:1fr;height:58px;padding:4px;z-index:20;box-shadow:0 6px 20px rgba(0,0,0,.45)}
+#bnav button{background:none;border-radius:22px;margin:0;padding:4px 2px;font-size:11px;color:#8e9fad;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px}
+#bnav button.act{background:#233346;color:#2aabee}
 #cview{display:flex;flex-direction:column;height:100%}
 #mbox{flex:1;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:6px}
 .msg{max-width:78%;padding:9px 13px;border-radius:16px;font-size:15px;word-wrap:break-word}
 .mine{background:#2b5278;align-self:flex-end;border-bottom-right-radius:4px}
 .theirs{background:#182533;align-self:flex-start;border-bottom-left-radius:4px}
-.cbar{background:#17212b;padding:8px;display:flex;gap:8px}
-.cbar input{margin:0;flex:1;border-radius:20px}
-.cbar button{width:42px;height:42px;border-radius:50%;margin:0;padding:0}
+.cbar{background:#17212b;padding:8px 10px;display:flex;gap:8px;align-items:center}
+.cbar input{margin:0;flex:1;border-radius:20px;padding:10px 14px}
+.cbar button{width:42px;height:42px;border-radius:50%;margin:0;padding:0;flex-shrink:0}
 .pad{padding:14px}
-.card{background:#17212b;padding:14px;border-radius:14px;margin-bottom:10px}
+.card{background:#17212b;padding:14px;border-radius:16px;margin-bottom:10px}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.gcard{background:#17212b;padding:14px;border-radius:14px;text-align:center}
+.gcard{background:#17212b;padding:14px;border-radius:16px;text-align:center}
 </style>
 </head>
 <body>
@@ -49,21 +62,25 @@ main{flex:1;overflow-y:auto;display:flex;flex-direction:column}
 </div>
 <div id="app" class="hidden" style="display:flex;flex-direction:column;height:100dvh">
 <header>
-<div style="display:flex;align-items:center;gap:8px">
+<div style="display:flex;align-items:center;gap:10px">
 <button id="bbtn" class="sec hidden" onclick="closeC()" style="width:auto;margin:0;padding:6px 10px">←</button>
-<b id="hdr" style="font-size:17px">Suttongram</b>
+<b id="hdr" style="font-size:19px">Suttongram</b>
 </div>
 <div style="display:flex;align-items:center;gap:8px">
-<button id="cbtn" class="sec hidden" onclick="call()" style="width:auto;margin:0;padding:6px 10px">📞</button>
+<button id="cbtn" class="sec hidden" onclick="call()" style="width:38px;height:38px;border-radius:50%;margin:0;padding:0">📞</button>
 <div class="stars">⭐ <span id="st">0</span></div>
 </div>
 </header>
-<main>
+<div id="top-bar">
+<div class="search-wrap"><div class="search-box">🔍 <input id="srch" placeholder="Поиск чатов" oninput="renderList()"></div></div>
+<div class="tabs-bar"><span id="f-all" class="act" onclick="setFilter('all')">Все чаты</span><span id="f-own" onclick="setFilter('own')">👑 Владельцы</span></div>
+</div>
+<main id="main-box">
 <div id="t-chats" style="height:100%;display:flex;flex-direction:column">
 <div id="ulist"></div>
 <div id="cview" class="hidden">
 <div id="mbox"></div>
-<div class="cbar"><input id="minp" placeholder="Сообщение..."><button onclick="send()">➤</button></div>
+<div class="cbar"><input id="minp" placeholder="Сообщение..." onkeydown="if(event.key==='Enter')send()"><button onclick="send()">➤</button></div>
 </div>
 </div>
 <div id="t-shop" class="hidden pad"><select id="grec"></select><div class="grid" id="slist"></div></div>
@@ -86,10 +103,10 @@ main{flex:1;overflow-y:auto;display:flex;flex-direction:column}
 </div>
 </main>
 <nav id="bnav">
-<button class="act" onclick="tab('chats',this)">💬<span>Чаты</span></button>
-<button onclick="tab('shop',this)">🛍️<span>Подарки</span></button>
-<button onclick="tab('prof',this)">👤<span>Профиль</span></button>
-<button id="nown" class="hidden" onclick="tab('own',this)">👑<span>Админка</span></button>
+<button class="act" onclick="tab('chats',this)"><span style="font-size:18px">💬</span>Чаты</button>
+<button onclick="tab('shop',this)"><span style="font-size:18px">🛍️</span>Подарки</button>
+<button onclick="tab('prof',this)"><div id="nava" class="ava xs"></div>Профиль</button>
+<button id="nown" class="hidden" onclick="tab('own',this)"><span style="font-size:18px">👑</span>Админка</button>
 </nav>
 </div>
 <script>
@@ -97,7 +114,7 @@ const B = "https://idashrgfukgszyrqpjid." + "supabase.co";
 const K = "sb_publishable_wEuPnq7xgewXLeWYmoG5iw_0ZzT25i_";
 const H = { "apikey": K, "Content-Type": "application/json", "Prefer": "return=representation" };
 const $ = i => document.getElementById(i);
-let me = null, ch = null, us = [], tm = null;
+let me = null, ch = null, us = [], allMsgs = [], flt = "all", tm = null;
 
 async function api(p, m = "GET", b = null) {
   const r = await fetch(B + p, { method: m, headers: H, body: b ? JSON.stringify(b) : null });
@@ -110,7 +127,7 @@ async function api(p, m = "GET", b = null) {
 
 function setAva(el, u) {
   if (u && u.avatar) { el.style.backgroundImage = "url(" + u.avatar + ")"; el.innerText = ""; }
-  else { el.style.backgroundImage = "none"; el.innerText = u ? u.username : "?"; }
+  else { el.style.backgroundImage = "none"; el.innerText = u ? u.username.slice(0, 2) : "?"; }
 }
 
 function enter() {
@@ -146,30 +163,50 @@ async function auth(reg) {
   } catch (e) { $('err').innerText = e.message; }
 }
 
+function setFilter(f) {
+  flt = f;
+  $('f-all').className = f === 'all' ? 'act' : '';
+  $('f-own').className = f === 'own' ? 'act' : '';
+  renderList();
+}
+
 async function loadU() {
   us = await api("/rest/v1/profiles?select=*");
+  allMsgs = await api(`/rest/v1/messages?or=(sender_id.eq.${me.id},receiver_id.eq.${me.id})&order=created_at.desc`);
   me = us.find(x => x.id === me.id) || me;
   $('st').innerText = me.stars;
-  setAva($('pava'), me);
+  setAva($('pava'), me); setAva($('nava'), me);
   $('pname').innerHTML = "@" + me.username + (me.is_owner ? '<span class="ok">✓</span>' : '');
   if (me.is_owner) { $('prole').innerText = "Создатель Suttongram 👑"; $('nown').classList.remove('hidden'); }
-  $('ulist').innerHTML = ""; $('grec').innerHTML = ""; $('ausel').innerHTML = "";
+  $('grec').innerHTML = ""; $('ausel').innerHTML = "";
   us.forEach(u => {
     $('ausel').innerHTML += `<option value="${u.id}">@${u.username} (⭐${u.stars})</option>`;
-    if (u.id !== me.id) {
-      $('grec').innerHTML += `<option value="${u.id}">@${u.username}</option>`;
-      const row = document.createElement('div');
-      row.className = 'row';
-      row.onclick = () => openC(u);
-      const av = document.createElement('div');
-      av.className = 'ava';
-      setAva(av, u);
-      row.appendChild(av);
-      row.innerHTML += `<div><b>@${u.username}${u.is_owner ? '<span class="ok">✓</span>' : ''}</b><div style="color:#7f91a4;font-size:13px">в сети</div></div>`;
-      $('ulist').appendChild(row);
-    }
+    if (u.id !== me.id) $('grec').innerHTML += `<option value="${u.id}">@${u.username}</option>`;
   });
-  if (!$('ulist').innerHTML) $('ulist').innerHTML = "<p class='pad'>Пока никого нет. Позови друзей!</p>";
+  renderList();
+}
+
+function renderList() {
+  const q = ($('srch').value || "").toLowerCase();
+  $('ulist').innerHTML = "";
+  us.forEach(u => {
+    if (u.id === me.id) return;
+    if (flt === 'own' && !u.is_owner) return;
+    if (q && !u.username.toLowerCase().includes(q)) return;
+    const last = allMsgs.find(m => m.sender_id === u.id || m.receiver_id === u.id);
+    const txt = last ? (last.content.startsWith("CALL::") ? "📞 Звонок" : last.content) : "Нажмите, чтобы написать";
+    const tmStr = last ? new Date(last.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : "";
+    const row = document.createElement('div');
+    row.className = 'row';
+    row.onclick = () => openC(u);
+    const av = document.createElement('div');
+    av.className = 'ava';
+    setAva(av, u);
+    row.appendChild(av);
+    row.innerHTML += `<div class="r-mid"><div class="r-top"><div class="r-name">@${u.username}${u.is_owner ? '<span class="ok">✓</span>' : ''}</div><span class="r-time">${tmStr}</span></div><div class="r-msg">${txt}</div></div>`;
+    $('ulist').appendChild(row);
+  });
+  if (!$('ulist').innerHTML) $('ulist').innerHTML = "<p class='pad' style='color:#7f91a4'>Чатов не найдено</p>";
 }
 
 function upAva(inp) {
@@ -184,7 +221,7 @@ function upAva(inp) {
       c.getContext('2d').drawImage(img, 0, 0, s, s);
       const b64 = c.toDataURL('image/jpeg', 0.7);
       await api("/rest/v1/profiles?id=eq." + me.id, "PATCH", { avatar: b64 });
-      me.avatar = b64; setAva($('pava'), me);
+      me.avatar = b64; setAva($('pava'), me); setAva($('nava'), me);
       alert("Фото обновлено! ✨");
     };
     img.src = e.target.result;
@@ -194,7 +231,8 @@ function upAva(inp) {
 
 async function openC(u) {
   ch = u;
-  $('ulist').classList.add('hidden'); $('bnav').classList.add('hidden');
+  $('ulist').classList.add('hidden'); $('bnav').classList.add('hidden'); $('top-bar').classList.add('hidden');
+  $('main-box').style.paddingBottom = "0";
   $('cview').classList.remove('hidden'); $('bbtn').classList.remove('hidden'); $('cbtn').classList.remove('hidden');
   $('hdr').innerHTML = "@" + u.username + (u.is_owner ? '<span class="ok">✓</span>' : '');
   await loadM();
@@ -219,8 +257,10 @@ async function loadM() {
 
 function closeC() {
   ch = null; clearInterval(tm);
-  $('cview').classList.add('hidden'); $('ulist').classList.remove('hidden'); $('bnav').classList.remove('hidden');
+  $('cview').classList.add('hidden'); $('ulist').classList.remove('hidden'); $('bnav').classList.remove('hidden'); $('top-bar').classList.remove('hidden');
+  $('main-box').style.paddingBottom = "76px";
   $('bbtn').classList.add('hidden'); $('cbtn').classList.add('hidden'); $('hdr').innerText = "Suttongram";
+  loadU();
 }
 
 async function send(c = null) {
@@ -262,7 +302,7 @@ async function loadG() {
   is.forEach(i => {
     $('mgifts').innerHTML += `<div class="gcard"><div style="font-size:38px">${i.gifts.emoji}</div><b>${i.gifts.name}</b><div style="color:#7f91a4;font-size:12px">от @${i.sender.username}</div></div>`;
   });
-  if (!$('mgifts').innerHTML) $('mgifts').innerHTML = "<p>Подарков пока нет</p>";
+  if (!$('mgifts').innerHTML) $('mgifts').innerHTML = "<p style='color:#7f91a4'>Подарков пока нет</p>";
 }
 
 async function give() {
@@ -283,7 +323,8 @@ async function addG() {
 function tab(t, b) {
   ['chats', 'shop', 'prof', 'own'].forEach(x => $('t-' + x).classList.add('hidden'));
   $('t-' + t).classList.remove('hidden');
-  document.querySelectorAll('nav button').forEach(x => x.classList.remove('act'));
+  $('top-bar').classList.toggle('hidden', t !== 'chats');
+  document.querySelectorAll('#bnav button').forEach(x => x.classList.remove('act'));
   b.classList.add('act');
   if (t === 'prof') loadG();
   if (t === 'chats') loadU();
