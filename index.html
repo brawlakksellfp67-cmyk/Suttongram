@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <title>Suttongram</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;font-family:-apple-system,sans-serif}
@@ -27,43 +28,276 @@ main{flex:1;overflow-y:auto;display:flex;flex-direction:column}
 .msg{max-width:78%;padding:9px 13px;border-radius:16px;font-size:15px;word-wrap:break-word}
 .mine{background:#2b5278;align-self:flex-end;border-bottom-right-radius:4px}
 .theirs{background:#182533;align-self:flex-start;border-bottom-left-radius:4px}
-.cbar{background:#17212b;padding:8px;display:flex;gap:8px}.cbar input{margin:0;flex:1;border-radius:20px}.cbar button{width:42px;height:42px;border-radius:50%;margin:0;padding:0}
-.pad{padding:14px}.card{background:#17212b;padding:14px;border-radius:14px;margin-bottom:10px}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.gcard{background:#17212b;padding:14px;border-radius:14px;text-align:center}
+.cbar{background:#17212b;padding:8px;display:flex;gap:8px}
+.cbar input{margin:0;flex:1;border-radius:20px}
+.cbar button{width:42px;height:42px;border-radius:50%;margin:0;padding:0}
+.pad{padding:14px}
+.card{background:#17212b;padding:14px;border-radius:14px;margin-bottom:10px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.gcard{background:#17212b;padding:14px;border-radius:14px;text-align:center}
 </style>
 </head>
 <body>
 <div id="auth">
-<div class="logo">✈️</div><h2 style="margin-bottom:14px">Suttongram</h2>
-<input id="uin" placeholder="Никнейм"><input type="password" id="pin" placeholder="Пароль (от 6 символов)">
-<button onclick="auth(0)">Войти</button><button class="sec" onclick="auth(1)">Создать аккаунт</button>
+<div class="logo">✈️</div>
+<h2 style="margin-bottom:14px">Suttongram</h2>
+<input id="uin" placeholder="Никнейм">
+<input type="password" id="pin" placeholder="Пароль (от 6 символов)">
+<button onclick="auth(0)">Войти</button>
+<button class="sec" onclick="auth(1)">Создать аккаунт</button>
 <p id="err" style="color:#ff6b6b;font-size:13px;margin-top:6px"></p>
 </div>
 <div id="app" class="hidden" style="display:flex;flex-direction:column;height:100dvh">
 <header>
-<div style="display:flex;align-items:center;gap:8px"><button id="bbtn" class="sec hidden" onclick="closeC()" style="width:auto;margin:0;padding:6px 10px">←</button><b id="hdr" style="font-size:17px">Suttongram</b></div>
-<div style="display:flex;align-items:center;gap:8px"><button id="cbtn" class="sec hidden" onclick="call()" style="width:auto;margin:0;padding:6px 10px">📞</button><div class="stars">⭐ <span id="st">0</span></div></div>
+<div style="display:flex;align-items:center;gap:8px">
+<button id="bbtn" class="sec hidden" onclick="closeC()" style="width:auto;margin:0;padding:6px 10px">←</button>
+<b id="hdr" style="font-size:17px">Suttongram</b>
+</div>
+<div style="display:flex;align-items:center;gap:8px">
+<button id="cbtn" class="sec hidden" onclick="call()" style="width:auto;margin:0;padding:6px 10px">📞</button>
+<div class="stars">⭐ <span id="st">0</span></div>
+</div>
 </header>
 <main>
-<div id="t-chats" style="height:100%;display:flex;flex-direction:column"><div id="ulist"></div><div id="cview" class="hidden"><div id="mbox"></div><div class="cbar"><input id="minp" placeholder="Сообщение..."><button onclick="send()">➤</button></div></div></div>
+<div id="t-chats" style="height:100%;display:flex;flex-direction:column">
+<div id="ulist"></div>
+<div id="cview" class="hidden">
+<div id="mbox"></div>
+<div class="cbar"><input id="minp" placeholder="Сообщение..."><button onclick="send()">➤</button></div>
+</div>
+</div>
 <div id="t-shop" class="hidden pad"><select id="grec"></select><div class="grid" id="slist"></div></div>
 <div id="t-prof" class="hidden pad">
-<div class="card" style="display:flex;align-items:center;gap:14px"><div id="pava" class="ava lg" onclick="$('ain').click()"></div><input type="file" id="ain" accept="image/*" class="hidden" onchange="upAva(this)"><div><b id="pname" style="font-size:18px"></b><div id="prole" style="color:#2aabee;font-size:13px">в сети</div><div onclick="$('ain').click()" style="color:#7f91a4;font-size:12px;margin-top:6px">📷 Сменить фото</div></div></div>
-<div class="grid" id="mgifts"></div><button class="sec" onclick="logout()" style="margin-top:16px;color:#ff6b6b">Выйти</button>
+<div class="card" style="display:flex;align-items:center;gap:14px">
+<div id="pava" class="ava lg" onclick="$('ain').click()"></div>
+<input type="file" id="ain" accept="image/*" class="hidden" onchange="upAva(this)">
+<div>
+<b id="pname" style="font-size:18px"></b>
+<div id="prole" style="color:#2aabee;font-size:13px">в сети</div>
+<div onclick="$('ain').click()" style="color:#7f91a4;font-size:12px;margin-top:6px">📷 Сменить фото</div>
 </div>
-<div id="t-own" class="hidden pad"><div class="card"><select id="ausel"></select><input type="number" id="aamt" placeholder="Сколько звёзд"><button onclick="give()">Выдать звёзды</button></div><div class="card"><input id="nge" placeholder="Эмодзи 🧸"><input id="ngn" placeholder="Название"><input type="number" id="ngp" placeholder="Цена"><button onclick="addG()">Добавить подарок</button></div></div>
+</div>
+<div class="grid" id="mgifts"></div>
+<button class="sec" onclick="logout()" style="margin-top:16px;color:#ff6b6b">Выйти</button>
+</div>
+<div id="t-own" class="hidden pad">
+<div class="card"><select id="ausel"></select><input type="number" id="aamt" placeholder="Сколько звёзд"><button onclick="give()">Выдать звёзды</button></div>
+<div class="card"><input id="nge" placeholder="Эмодзи 🧸"><input id="ngn" placeholder="Название"><input type="number" id="ngp" placeholder="Цена"><button onclick="addG()">Добавить подарок</button></div>
+</div>
 </main>
-<nav id="bnav"><button class="act" onclick="tab('chats',this)">💬<span>Чаты</span></button><button onclick="tab('shop',this)">🛍️<span>Подарки</span></button><button onclick="tab('prof',this)">👤<span>Профиль</span></button><button id="nown" class="hidden" onclick="tab('own',this)">👑<span>Админка</span></button></nav>
+<nav id="bnav">
+<button class="act" onclick="tab('chats',this)">💬<span>Чаты</span></button>
+<button onclick="tab('shop',this)">🛍️<span>Подарки</span></button>
+<button onclick="tab('prof',this)">👤<span>Профиль</span></button>
+<button id="nown" class="hidden" onclick="tab('own',this)">👑<span>Админка</span></button>
+</nav>
 </div>
 <script>
-const B="https://idashrgfukgszyrqpjid."+"supabase.co",K="sb_publishable_wEuPnq7xgewXLeWYmoG5iw_0ZzT25i_",H={"apikey":K,"Content-Type":"application/json","Prefer":"return=representation"},$=i=>document.getElementById(i);
-let me=null,ch=null,us=[],tm=null;
-async function api(p,m="GET",b=null){const r=await fetch(B+p,{method:m,headers:H,body:b?JSON.stringify(b):null}),t=await r.text();let d={};try{d=JSON.parse(t)}catch(e){}if(!r.ok)throw new Error(d.msg||d.message||t);return d}
-function setAva(el,u){if(u&&u.avatar){el.style.backgroundImage=`url(${u.avatar})`;el.innerText=""}else{el.style.backgroundImage="none";el.innerText=u?u.username:"?"}}
-function enter(){localStorage.setItem("sg_id",me.id);$('auth').classList.add('hidden');$('app').classList.remove('hidden');loadU();loadS()}
-function logout(){localStorage.removeItem("sg_id");location.reload()}
-async function auth(reg){$('err').innerText="Загрузка...";try{const u=$('uin').value.trim().toLowerCase().replace(/[^a-z0-9_]/g,''),p=$('pin').value;if(!u||p.length<6)throw new Error("Ник (англ.) и пароль от 6 символов");const em=u+"@gmail.com";if(reg){const a=await api("/auth/v1/signup","POST",{email:em,password:p}),uid=(a.user&&a.user.id)||a.id,ex=await api("/rest/v1/profiles?select=id"),f=ex.length===0,pr=await api("/rest/v1/profiles","POST",{id:uid,username:u,stars:f?9999:50,is_owner:f});me=pr.at(0)}else{const a=await api("/auth/v1/token?grant_type=password","POST",{email:em,password:p}),pr=await api("/rest/v1/profiles?id=eq."+a.user.id);me=pr.at(0)}if(!me)throw new Error("Профиль не найден");enter()}catch(e){$('err').innerText=e.message}}
-async function loadU(){us=await api("/rest/v1/profiles?select=*");me=us.find(x=>x.id===me.id)||me;$('st').innerText=me.stars;setAva($('pava'),me);$('pname').innerHTML=`@${me.username}${me.is_owner?'<span class="ok">✓</span>':''}`;if(me.is_owner){$('prole').innerText="Создатель Suttongram 👑";$('nown').classList.remove('hidden')}$('ulist').innerHTML="";$('grec').innerHTML="";$('ausel').innerHTML="";us.forEach(u=>{$('ausel').innerHTML+=`<option value="${u.id}">@${u.username} (⭐${u.stars})</option>`;if(u.id!==me.id){$('grec').innerHTML+=`<option value="${u.id}">@${u.username}</option>`;const row=document.createElement('div');row.className='row';row.onclick=()=>openC(u);const av=document.createElement('div');av.className='ava';setAva(av,u);row.appendChild(av);row.innerHTML+=`<div><b>@${u.username}${u.is_owner?'<span class="ok">✓</span>':''}</b><div style="color:#7f91a4;font-size:13px">в сети</div></div>`;$('ulist').appendChild(row)}});if(!$('ulist').innerHTML)$('ulist').innerHTML="<p class='pad'>Пока никого нет. Позови друзей!</p>"}
-function upAva(inp){const f=inp.files.at(0);if(!f)return;const r=new FileReader();r.onload=e=>{const img=new Image();img.onload=async()=>{const c=document.createElement('canvas'),s=150;c.width=s;c.height=s;c.getContext('2d').drawImage(img,0,0,s,s);const b64=c.toDataURL('image/jpeg',0.7);await api("/rest/v1/profiles?id=eq."+me.id,"PATCH",{avatar:b64});me.avatar=b64;setAva($('pava'),me);alert("Фото обновлено! ✨")};img.src=e.target.result};r.readAsDataURL(f)}
-async function openC(u){ch=u;$('ulist').classList.add('hidden');$('bnav').classList.add('hidden');$('cview').classList.remove('hidden');$('bbtn').classList.remove('hidden');$('cbtn').classList.remove('hidden');$('hdr').innerHTML=`@${u.username}${u.is_owner?'<span class="ok">✓</span>':''}`;await loadM();tm=setInterval(loadM,2000)}
-async function loadM(){if(!ch)return;const ms=await api(`/rest/v1/messages?or=(and(sender_id.eq.${me.id},receiver_id.eq.${ch.id}),and(sender_id.eq.${ch.id},receiver_id.eq.${me.id}))&order=created_at.asc`);$('mbox').innerHTML="";ms.forEach(m=>{const d=document.createElement('div');d.className="msg "+(m.sender_id===me.id?"mine":"theirs");if(m.content.startsWith("CALL::")){const rm=m.content.split("::").at(1);d.innerHTML=`📞 <b>Звонок</b><br><button onclick="joinC('${rm}')" style="margin-top:6px;padding:6px;background:#28a745">Ответить</button>`}else d.innerText=m.content;$('mbox').appendChild(d)});$('mbox').scrollTop=$('mbox').scrollHeight}
+const B = "https://idashrgfukgszyrqpjid." + "supabase.co";
+const K = "sb_publishable_wEuPnq7xgewXLeWYmoG5iw_0ZzT25i_";
+const H = { "apikey": K, "Content-Type": "application/json", "Prefer": "return=representation" };
+const $ = i => document.getElementById(i);
+let me = null, ch = null, us = [], tm = null;
+
+async function api(p, m = "GET", b = null) {
+  const r = await fetch(B + p, { method: m, headers: H, body: b ? JSON.stringify(b) : null });
+  const t = await r.text();
+  let d = {};
+  try { d = JSON.parse(t); } catch (e) {}
+  if (!r.ok) throw new Error(d.msg || d.message || t);
+  return d;
+}
+
+function setAva(el, u) {
+  if (u && u.avatar) { el.style.backgroundImage = "url(" + u.avatar + ")"; el.innerText = ""; }
+  else { el.style.backgroundImage = "none"; el.innerText = u ? u.username : "?"; }
+}
+
+function enter() {
+  localStorage.setItem("sg_id", me.id);
+  $('auth').classList.add('hidden');
+  $('app').classList.remove('hidden');
+  loadU(); loadS();
+}
+
+function logout() { localStorage.removeItem("sg_id"); location.reload(); }
+
+async function auth(reg) {
+  $('err').innerText = "Загрузка...";
+  try {
+    const u = $('uin').value.trim().toLowerCase().replace(/[^a-z0-9_]/g, '');
+    const p = $('pin').value;
+    if (!u || p.length < 6) throw new Error("Ник (англ.) и пароль от 6 символов");
+    const em = u + "@gmail.com";
+    if (reg) {
+      const a = await api("/auth/v1/signup", "POST", { email: em, password: p });
+      const uid = (a.user && a.user.id) || a.id;
+      const ex = await api("/rest/v1/profiles?select=id");
+      const f = ex.length === 0;
+      const pr = await api("/rest/v1/profiles", "POST", { id: uid, username: u, stars: f ? 9999 : 50, is_owner: f });
+      me = pr.at(0);
+    } else {
+      const a = await api("/auth/v1/token?grant_type=password", "POST", { email: em, password: p });
+      const pr = await api("/rest/v1/profiles?id=eq." + a.user.id);
+      me = pr.at(0);
+    }
+    if (!me) throw new Error("Профиль не найден");
+    enter();
+  } catch (e) { $('err').innerText = e.message; }
+}
+
+async function loadU() {
+  us = await api("/rest/v1/profiles?select=*");
+  me = us.find(x => x.id === me.id) || me;
+  $('st').innerText = me.stars;
+  setAva($('pava'), me);
+  $('pname').innerHTML = "@" + me.username + (me.is_owner ? '<span class="ok">✓</span>' : '');
+  if (me.is_owner) { $('prole').innerText = "Создатель Suttongram 👑"; $('nown').classList.remove('hidden'); }
+  $('ulist').innerHTML = ""; $('grec').innerHTML = ""; $('ausel').innerHTML = "";
+  us.forEach(u => {
+    $('ausel').innerHTML += `<option value="${u.id}">@${u.username} (⭐${u.stars})</option>`;
+    if (u.id !== me.id) {
+      $('grec').innerHTML += `<option value="${u.id}">@${u.username}</option>`;
+      const row = document.createElement('div');
+      row.className = 'row';
+      row.onclick = () => openC(u);
+      const av = document.createElement('div');
+      av.className = 'ava';
+      setAva(av, u);
+      row.appendChild(av);
+      row.innerHTML += `<div><b>@${u.username}${u.is_owner ? '<span class="ok">✓</span>' : ''}</b><div style="color:#7f91a4;font-size:13px">в сети</div></div>`;
+      $('ulist').appendChild(row);
+    }
+  });
+  if (!$('ulist').innerHTML) $('ulist').innerHTML = "<p class='pad'>Пока никого нет. Позови друзей!</p>";
+}
+
+function upAva(inp) {
+  const f = inp.files.at(0);
+  if (!f) return;
+  const r = new FileReader();
+  r.onload = e => {
+    const img = new Image();
+    img.onload = async () => {
+      const c = document.createElement('canvas'), s = 150;
+      c.width = s; c.height = s;
+      c.getContext('2d').drawImage(img, 0, 0, s, s);
+      const b64 = c.toDataURL('image/jpeg', 0.7);
+      await api("/rest/v1/profiles?id=eq." + me.id, "PATCH", { avatar: b64 });
+      me.avatar = b64; setAva($('pava'), me);
+      alert("Фото обновлено! ✨");
+    };
+    img.src = e.target.result;
+  };
+  r.readAsDataURL(f);
+}
+
+async function openC(u) {
+  ch = u;
+  $('ulist').classList.add('hidden'); $('bnav').classList.add('hidden');
+  $('cview').classList.remove('hidden'); $('bbtn').classList.remove('hidden'); $('cbtn').classList.remove('hidden');
+  $('hdr').innerHTML = "@" + u.username + (u.is_owner ? '<span class="ok">✓</span>' : '');
+  await loadM();
+  tm = setInterval(loadM, 2000);
+}
+
+async function loadM() {
+  if (!ch) return;
+  const ms = await api(`/rest/v1/messages?or=(and(sender_id.eq.${me.id},receiver_id.eq.${ch.id}),and(sender_id.eq.${ch.id},receiver_id.eq.${me.id}))&order=created_at.asc`);
+  $('mbox').innerHTML = "";
+  ms.forEach(m => {
+    const d = document.createElement('div');
+    d.className = "msg " + (m.sender_id === me.id ? "mine" : "theirs");
+    if (m.content.startsWith("CALL::")) {
+      const rm = m.content.split("::").at(1);
+      d.innerHTML = `📞 <b>Звонок</b><br><button onclick="joinC('${rm}')" style="margin-top:6px;padding:6px;background:#28a745">Ответить</button>`;
+    } else d.innerText = m.content;
+    $('mbox').appendChild(d);
+  });
+  $('mbox').scrollTop = $('mbox').scrollHeight;
+}
+
+function closeC() {
+  ch = null; clearInterval(tm);
+  $('cview').classList.add('hidden'); $('ulist').classList.remove('hidden'); $('bnav').classList.remove('hidden');
+  $('bbtn').classList.add('hidden'); $('cbtn').classList.add('hidden'); $('hdr').innerText = "Suttongram";
+}
+
+async function send(c = null) {
+  const t = c || $('minp').value.trim();
+  if (!t || !ch) return;
+  if (!c) $('minp').value = "";
+  await api("/rest/v1/messages", "POST", { sender_id: me.id, receiver_id: ch.id, content: t });
+  loadM();
+}
+
+async function call() {
+  const rm = "SuttongramCall" + me.id.slice(0, 5) + ch.id.slice(0, 5);
+  await send("CALL::" + rm);
+  joinC(rm);
+}
+
+function joinC(rm) { window.open("https://" + "vdo" + ".ninja/?room=" + rm + "&wc=0&as=1", "_blank"); }
+
+async function loadS() {
+  const gs = await api("/rest/v1/gifts?select=*&order=price.asc");
+  $('slist').innerHTML = "";
+  gs.forEach(g => {
+    $('slist').innerHTML += `<div class="gcard"><div style="font-size:38px">${g.emoji}</div><b>${g.name}</b><div style="color:#ffd700;margin:4px 0">⭐ ${g.price}</div><button onclick="buy(${g.id},${g.price})" style="padding:7px;font-size:13px">Подарить</button></div>`;
+  });
+}
+
+async function buy(id, p) {
+  const r = $('grec').value;
+  if (!r) return alert("Некому дарить!");
+  if (me.stars < p) return alert("Мало звёзд!");
+  await api("/rest/v1/profiles?id=eq." + me.id, "PATCH", { stars: me.stars - p });
+  await api("/rest/v1/user_gifts", "POST", { gift_id: id, sender_id: me.id, receiver_id: r });
+  alert("Подарок отправлен! 🎁"); loadU();
+}
+
+async function loadG() {
+  const is = await api(`/rest/v1/user_gifts?select=*,gifts(*),sender:profiles!sender_id(username)&receiver_id=eq.${me.id}`);
+  $('mgifts').innerHTML = "";
+  is.forEach(i => {
+    $('mgifts').innerHTML += `<div class="gcard"><div style="font-size:38px">${i.gifts.emoji}</div><b>${i.gifts.name}</b><div style="color:#7f91a4;font-size:12px">от @${i.sender.username}</div></div>`;
+  });
+  if (!$('mgifts').innerHTML) $('mgifts').innerHTML = "<p>Подарков пока нет</p>";
+}
+
+async function give() {
+  const id = $('ausel').value, a = parseInt($('aamt').value);
+  if (!a) return;
+  const u = us.find(x => x.id === id);
+  await api("/rest/v1/profiles?id=eq." + id, "PATCH", { stars: u.stars + a });
+  alert("Звёзды выданы!"); loadU();
+}
+
+async function addG() {
+  const e = $('nge').value.trim(), n = $('ngn').value.trim(), p = parseInt($('ngp').value);
+  if (!e || !n || !p) return alert("Заполни поля");
+  await api("/rest/v1/gifts", "POST", { emoji: e, name: n, price: p });
+  alert("Добавлено!"); loadS();
+}
+
+function tab(t, b) {
+  ['chats', 'shop', 'prof', 'own'].forEach(x => $('t-' + x).classList.add('hidden'));
+  $('t-' + t).classList.remove('hidden');
+  document.querySelectorAll('nav button').forEach(x => x.classList.remove('act'));
+  b.classList.add('act');
+  if (t === 'prof') loadG();
+  if (t === 'chats') loadU();
+}
+
+(async () => {
+  const s = localStorage.getItem("sg_id");
+  if (s) {
+    try {
+      const p = await api("/rest/v1/profiles?id=eq." + s);
+      if (p.at(0)) { me = p.at(0); enter(); }
+    } catch (e) {}
+  }
+})();
+</script>
+</body>
+</html>
